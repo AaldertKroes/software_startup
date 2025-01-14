@@ -5,7 +5,7 @@ import 'dart:convert';
 // Write value
 class Authcontroller{
   final String baseUrl;
-  final storage = new FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   Authcontroller({required this.baseUrl});
 
