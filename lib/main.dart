@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:software_startup/views/ContactAndFAQView.dart';
 import 'package:software_startup/views/LoginView.dart';
 import 'package:software_startup/views/PackagesView.dart';
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LoginView(),
         '/packages': (context) => PackagesView(),
+        '/contact' : (context) => ContactAndFAQView(),
       },
     );
   }
