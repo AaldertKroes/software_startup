@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:software_startup/controllers/authcontroller.dart';
+import 'package:software_startup/views/PackagesView.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class LoginView extends StatelessWidget {
                 onPressed: () {
                   authcontroller.login(usernameController.text, passwordController.text).then((value) {
                     if (value == true) {
-                      Navigator.pushNamed(context, '/');
+                      Navigator.pushNamed(context, '/packages');
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Invalid username or password')),

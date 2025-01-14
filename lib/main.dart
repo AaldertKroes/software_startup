@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:software_startup/views/LoginView.dart';
+import 'package:software_startup/views/PackagesView.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginView(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LoginView(),
+        '/packages': (context) => PackagesView(),
+      },
     );
   }
 }
