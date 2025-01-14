@@ -32,4 +32,12 @@ class PackagesController {
       throw Exception("Kan pakketten niet ophalen: ${response.statusCode}");
     }
   }
+
+    Future<List<Map<String, dynamic>>> fetchUnderwayPackages() async {
+    var allPackages = await fetchPackages();
+    return allPackages
+        .where((package) => package['status'] == 'UNDERWAY')
+        .cast<Map<String, dynamic>>()
+        .toList();
+  }
 }
