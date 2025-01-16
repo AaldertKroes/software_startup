@@ -7,8 +7,8 @@ class CustomStyles {
     shape: WidgetStatePropertyAll<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)))
   );
 
-  static ElevatedButton willemRijdtButton(BuildContext context, String text, String? redirect) => ElevatedButton(
-    onPressed: () {redirect != null ? Navigator.pushNamed(context, redirect) : null;},
+  static ElevatedButton willemRijdtButton(BuildContext context, String text, {String? redirectTo}) => ElevatedButton(
+    onPressed: () {redirectTo != null ? Navigator.pushNamed(context, redirectTo) : null;},
     style: CustomStyles.willemRijdtButtonStyle,
     child: Text(
       text,
