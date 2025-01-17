@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:software_startup/views/HomeView.dart';
 import 'package:software_startup/views/LoginView.dart';
 import 'package:software_startup/views/PackagesView.dart';
+import 'package:software_startup/views/SendPackagesView.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => LoginView(),
         '/home': (context) => const HomeView(),
         '/packages': (context) => PackagesView(),
+        '/send_packages': (context) => SendPackagesView()
       },
     );
   }

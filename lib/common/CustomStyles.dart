@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomStyles {
+  static const backgroundColor = Color(0xfffbfbfb);
+
   static ButtonStyle willemRijdtButtonStyle = ButtonStyle(
     backgroundColor: const WidgetStatePropertyAll<Color>(Colors.black87),
     fixedSize: const WidgetStatePropertyAll<Size>(Size(300,50)),
