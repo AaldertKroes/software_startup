@@ -8,9 +8,11 @@ class SendPackagesView extends StatefulWidget {
   State<SendPackagesView> createState() => _SendPackagesViewState();
 }
 
+enum BoxSizes { small, medium, big }
+BoxSizes boxSizes = BoxSizes.small;
+
 class _SendPackagesViewState extends State<SendPackagesView> {
   final _formKey = GlobalKey<FormState>();
-  final _addressFormKey = GlobalKey<FormState>();
   final Map<String, dynamic> _formData = {
     "packageSize": "",
     "weight": 0,
@@ -31,6 +33,7 @@ class _SendPackagesViewState extends State<SendPackagesView> {
   final _streetController = TextEditingController();
   final _cityController = TextEditingController();
   final _postalCodeController = TextEditingController();
+  BoxSizes? selectedBoxSize;
 
   @override
   Widget build(BuildContext context) {
@@ -40,67 +43,125 @@ class _SendPackagesViewState extends State<SendPackagesView> {
         title: const Text("Send Packages View"),
       ),
       backgroundColor: CustomStyles.backgroundColor,
-      body: Center(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: addressForm(),
-        ),
+      body: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            const Text(
+              'Selecteer een pakketgrootte:',
+              style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: boxSizeSelection(),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: addressForm(),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _submitForm,
+              style: CustomStyles.willemRijdtButtonStyle,
+              child: const Text(
+                'Bevestigen',
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        )
       ),
     );
   }
 
-  void _submitAddressForm() {
-    if (_addressFormKey.currentState!.validate()) {
-
+  void _submitForm() {
+    if (_formKey.currentState!.validate() && selectedBoxSize != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Great succes!')),
+      );
+    }
+    if (selectedBoxSize == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Selecteer pakketgrootte')),
+      );
     }
   }
 
-  Widget addressForm() {
-    return Form(
-      key: _addressFormKey,
-      child: Column(
-        children: [
-          TextFormField(
-            controller: _streetController,
-            decoration: const InputDecoration(labelText: 'Straatnaam + huisnummer'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "Voer een straat en huisnummer in";
-              } else if (!RegExp(r'^[A-Za-z\s]+ \d+$').hasMatch(value)) {
-                return "Voer een geldige straat en huisnummer in";
-              }
-              return null;
-            },
+  Widget boxSizeSelection() {
+    return SegmentedButton(
+      emptySelectionAllowed: true,
+      style: ButtonStyle(
+        shape: WidgetStateProperty.all(
+          const RoundedRectangleBorder(
+            borderRadius: BorderRadius.zero, // Makes the border square
           ),
-          TextFormField(
-            controller: _cityController,
-            decoration: const InputDecoration(labelText: 'Stad'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "Voer een stad in";
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            controller: _postalCodeController,
-            decoration: const InputDecoration(labelText: 'Postcode'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "Voer een postcode in";
-              } else if (!RegExp(r'^\d{4}\s?[A-Za-z]{2}$').hasMatch(value)) {
-                return "Voer een geldige postcode in. (bijv. '1234 AB')";
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: _submitAddressForm,
-            child: const Text('Bevestigen'),
-          ),
-        ],
+        ),
       ),
+      segments: const <ButtonSegment<BoxSizes>>[
+        ButtonSegment<BoxSizes>(
+          value: BoxSizes.small,
+          label: Text('Klein pakket'),
+        ),
+        ButtonSegment<BoxSizes>(
+          value: BoxSizes.medium,
+          label: Text('Gemiddeld pakket'),
+        ),
+        ButtonSegment<BoxSizes>(
+          value: BoxSizes.big,
+          label: Text('Groot pakket'),
+        ),
+      ],
+      selected: selectedBoxSize != null ? <BoxSizes>{selectedBoxSize!} : <BoxSizes>{},
+      onSelectionChanged: (Set<BoxSizes> newSelection) {
+        setState(() {
+          selectedBoxSize = newSelection.isNotEmpty ? newSelection.first : null;
+        });
+      },
+    );
+  }
+
+  Widget addressForm() {
+    return Column(
+      children: [
+        TextFormField(
+          controller: _streetController,
+          decoration: const InputDecoration(
+              labelText: 'Straatnaam + huisnummer'),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "Voer een straat en huisnummer in";
+            } else if (!RegExp(r'^[A-Za-z\s]+ \d+$').hasMatch(value)) {
+              return "Voer een geldige straat en huisnummer in";
+            }
+            return null;
+          },
+        ),
+        TextFormField(
+          controller: _cityController,
+          decoration: const InputDecoration(labelText: 'Stad'),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "Voer een stad in";
+            }
+            return null;
+          },
+        ),
+        TextFormField(
+          controller: _postalCodeController,
+          decoration: const InputDecoration(labelText: 'Postcode'),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "Voer een postcode in";
+            } else if (!RegExp(r'^\d{4}\s?[A-Za-z]{2}$').hasMatch(value)) {
+              return "Voer een geldige postcode in. (bijv. '1234 AB')";
+            }
+            return null;
+          },
+        ),
+      ],
     );
   }
 }
