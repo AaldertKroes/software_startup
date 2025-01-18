@@ -34,7 +34,7 @@ class LoginView extends StatelessWidget {
                 onPressed: () {
                   authcontroller.login(usernameController.text, passwordController.text).then((value) {
                     if (value == true) {
-                      Navigator.pushNamed(context, '/contact');
+                      Navigator.pushNamed(context, '/home');
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Invalid username or password')),

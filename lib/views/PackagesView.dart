@@ -14,7 +14,7 @@ class PackagesView extends StatelessWidget {
         title: const Text('Pakketten'),
       ),
       body: FutureBuilder<List<dynamic>>(
-        future: controller.fetchPackages(),
+        future: controller.deliveredPackages(),
         builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
