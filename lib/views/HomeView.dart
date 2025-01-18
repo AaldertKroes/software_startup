@@ -32,9 +32,9 @@ class _HomeViewState extends State<HomeView> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     // Pas de redirectTo's aan wanneer de pagina's aangemaakt worden
-                    CustomStyles.willemRijdtButton(context, "Pakketten volgen", redirectTo: "/packages"),
+                    CustomStyles.willemRijdtButton(context, "Pakketten volgen", redirectTo: "/receiver"),
                     CustomStyles.willemRijdtButton(context, "Verstuur pakketje", redirectTo: null),
-                    CustomStyles.willemRijdtButton(context, "Geschiedenis bekijken", redirectTo: null),
+                    CustomStyles.willemRijdtButton(context, "Geschiedenis bekijken", redirectTo: "/packages"),
                   ],
                 ),
               ),
