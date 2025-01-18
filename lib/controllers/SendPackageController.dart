@@ -65,8 +65,8 @@ class SendPackageController {
         packageData["senderPostalCode"],
     );
     
-    int? recipientAddressId = await postRequest(_recipientAddressFormData, '/addresses');
-    int? senderAddressId = await postRequest(_senderAddressFormData, '/addresses');
+    int? recipientAddressId = await postRequest(_recipientAddressFormData, 'addresses');
+    int? senderAddressId = await postRequest(_senderAddressFormData, 'addresses');
 
     if (recipientAddressId == null || senderAddressId == null) {
       return false;
@@ -76,12 +76,11 @@ class SendPackageController {
     _packageFormData['startLocationId'] = senderAddressId;
     _packageFormData['endLocationId'] = recipientAddressId;
 
-    int? packageId = await postRequest(_packageFormData, '/delivery-packages');
+    int? packageId = await postRequest(_packageFormData, 'delivery-packages');
 
     if (packageId == null) {
       return false;
     } else {
-      print('Delivery succesfully submitted!');
       return true;
     }
   }
@@ -91,7 +90,7 @@ class SendPackageController {
       data,
     );
 
-    var token = storage.read(key: 'jwt');
+    var token = await storage.read(key: 'jwt');
 
     var headers = {
       'Content-Type': 'application/json',
@@ -104,7 +103,7 @@ class SendPackageController {
       body: payload,
       headers: headers,
     );
-    print(response.body);
+
     if (response.statusCode == 201) {
       var jsonResponse = jsonDecode(response.body);
       return jsonResponse['id'];
