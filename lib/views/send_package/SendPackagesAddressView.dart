@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:software_startup/common/CustomStyles.dart';
 import 'package:software_startup/controllers/SendPackageController.dart';
 
-
 class SendPackagesAddress extends StatefulWidget {
   const SendPackagesAddress({super.key});
 
@@ -12,7 +11,6 @@ class SendPackagesAddress extends StatefulWidget {
 
 class _SendPackagesAddressState extends State<SendPackagesAddress> {
   final _packageAddressFormKey = GlobalKey<FormState>();
-  final SendPackageController _sendPackageController = SendPackageController();
 
   final _recipientStreetController = TextEditingController();
   final _recipientCityController = TextEditingController();
@@ -49,7 +47,7 @@ class _SendPackagesAddressState extends State<SendPackagesAddress> {
             ),
             const SizedBox(height: 20),
             const Text(
-              "Bezorgadres invullen",
+              "Ophaaladres invullen",
               style: TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 20),
@@ -76,12 +74,22 @@ class _SendPackagesAddressState extends State<SendPackagesAddress> {
 
   void _submitPackageAddressForm() {
     if (_packageAddressFormKey.currentState!.validate()) {
-      _sendPackageController.addPackageAddresses(_recipientStreetController.text,
-          _recipientCityController.text, _recipientPostalCodeController.text,
-          _senderStreetController.text, _senderCityController.text,
-          _senderPostalCodeController.text);
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
 
-      Navigator.pushNamed(context, '/send_packages/recipient');
+      Navigator.pushNamed(
+        context,
+        '/send_packages/recipient',
+        arguments: <String, dynamic>{
+          "packageSize": args['packageSize'],
+          "packageWeight": args['packageWeight'],
+          "recipientStreet": _recipientStreetController.text,
+          "recipientCity": _recipientCityController.text,
+          "recipientPostalCode": _recipientPostalCodeController.text,
+          "senderStreet": _senderStreetController.text,
+          "senderCity": _senderCityController.text,
+          "senderPostalCode": _senderPostalCodeController.text,
+        },
+      );
     }
   }
 

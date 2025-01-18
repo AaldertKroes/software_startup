@@ -10,8 +10,37 @@ class SendPackagesRecipient extends StatefulWidget {
 }
 
 class _SendPackagesRecipientState extends State<SendPackagesRecipient> {
+  final SendPackageController _sendPackageController = SendPackageController();
+
+  void sendPackage() {
+    final args = ModalRoute
+        .of(context)
+        ?.settings
+        .arguments as Map<String, dynamic>;
+
+    _sendPackageController.submitNewDelivery(args);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: CustomStyles.backgroundColor,
+        title: const Text("Bevestig verzending"),
+      ),
+      backgroundColor: CustomStyles.backgroundColor,
+      body: Column(
+        children: [
+          ElevatedButton(
+            onPressed: sendPackage,
+            style: CustomStyles.willemRijdtButtonStyle,
+            child: const Text(
+              "Bevestig verzending",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

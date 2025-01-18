@@ -14,7 +14,6 @@ enum BoxSizes { small, medium, big }
 
 class _SendPackagesViewState extends State<SendPackagesView> {
   final _packageWeightFormKey = GlobalKey<FormState>();
-  final SendPackageController _sendPackageController = SendPackageController();
 
   BoxSizes? selectedBoxSize;
   final _packageWeightController = TextEditingController();
@@ -77,12 +76,15 @@ class _SendPackagesViewState extends State<SendPackagesView> {
     if (_packageWeightFormKey.currentState!.validate()
         && selectedBoxSize != null) {
 
-      _sendPackageController.addPackageSizeAndWeight(
-        selectedBoxSize.toString().split('.').last,
-        int.parse(_packageWeightController.text)
+      //Send selected items to the next view.
+      Navigator.pushNamed(
+        context,
+        '/send_packages/address',
+        arguments: <String, dynamic>{
+          "packageSize": selectedBoxSize.toString().split('.').last,
+          "packageWeight": int.parse(_packageWeightController.text),
+          },
       );
-
-      Navigator.pushNamed(context, '/send_packages/address');
     }
     if (selectedBoxSize == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -172,7 +174,7 @@ class _SendPackagesViewState extends State<SendPackagesView> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return "Voer het gewicht van het pakketje in";
+          return "Voer het gewicht van het pakket in";
         } else if (int.tryParse(value) == null) {
           return "Voer het gewicht in hele killogrammen in.";
         }
