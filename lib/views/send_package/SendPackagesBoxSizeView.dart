@@ -79,7 +79,7 @@ class _SendPackagesViewState extends State<SendPackagesView> {
       Map<String, double> prices = {
         "Klein": 3.95,
         "Gemiddeld": 4.95,
-        "Groot": 12.50,
+        "Groot": 12.95,
       };
 
       //Send selected items to the next view.
@@ -150,7 +150,7 @@ class _SendPackagesViewState extends State<SendPackagesView> {
               Text('Groot'),
               SizedBox(height: 4),
               Text(
-                'Max.\n176 x 78 x 58 cm\n€ 12,50',
+                'Max.\n176 x 78 x 58 cm\n€ 12,95',
                 style: TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],

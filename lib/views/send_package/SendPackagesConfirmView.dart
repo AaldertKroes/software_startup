@@ -33,6 +33,12 @@ class _SendPackagesConfirmState extends State<SendPackagesConfirm> {
           )
       );
     }
+    if (mounted) {
+      Navigator.pushNamed(
+        context,
+        '/home',
+      );
+    }
   }
 
   @override
@@ -53,22 +59,22 @@ class _SendPackagesConfirmState extends State<SendPackagesConfirm> {
               children: [
                 const Divider(),
                 const Text("Pakket"),
-                InfoTile(label: "Formaat", value: args["packageSize"] ?? "N/A"),
-                InfoTile(label: "Gewicht", value: args["packageWeight"] ?? "N/A"),
-                InfoTile(label: "Kosten", value: args["paymentAmount"] ?? "N/A"),
+                InfoTile(label: "Formaat", value: args["packageSize"]),
+                InfoTile(label: "Gewicht", value: args["packageWeight"]),
+                InfoTile(label: "Kosten", value: "€ ${args["paymentAmount"]}".replaceAll('.', ',')),
                 const Divider(),
                 const Text("Ontvanger"),
-                InfoTile(label: "Straat", value: args["recipientStreet"] ?? "N/A"),
-                InfoTile(label: "Stad", value: args["recipientCity"] ?? "N/A"),
-                InfoTile(label: "Postcode", value: args["recipientPostalCode"] ?? "N/A"),
-                InfoTile(label: "Naam", value: args["recipientFirstName"] ?? "N/A"),
-                InfoTile(label: "Achternaam", value: args["recipientLastName"] ?? "N/A"),
-                InfoTile(label: "Emailadres", value: args["recipientEmail"] ?? "N/A"),
+                InfoTile(label: "Straat", value: args["recipientStreet"]),
+                InfoTile(label: "Stad", value: args["recipientCity"]),
+                InfoTile(label: "Postcode", value: args["recipientPostalCode"]),
+                InfoTile(label: "Naam", value: args["recipientFirstName"]),
+                InfoTile(label: "Achternaam", value: args["recipientLastName"]),
+                InfoTile(label: "Emailadres", value: args["recipientEmail"]),
                 const Divider(),
                 const Text("Verstuurder"),
-                InfoTile(label: "Sender Street", value: args["senderStreet"] ?? "N/A"),
-                InfoTile(label: "Sender City", value: args["senderCity"] ?? "N/A"),
-                InfoTile(label: "Sender Postal Code", value: args["senderPostalCode"] ?? "N/A"),
+                InfoTile(label: "Sender Street", value: args["senderStreet"]),
+                InfoTile(label: "Sender City", value: args["senderCity"]),
+                InfoTile(label: "Sender Postal Code", value: args["senderPostalCode"]),
                 const Divider(),
                 ],
             )
