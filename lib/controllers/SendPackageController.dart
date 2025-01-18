@@ -28,6 +28,30 @@ class SendPackageController {
     "postalCode": "",
     "county": "The Netherlands",
   };
+  // final Map<String, dynamic> _receiverAccountData = {
+  //   "id": null,
+  //   "login": "",
+  //   "firstName": "",
+  //   "lastName": "",
+  //   "email": "",
+  //   "imageUrl": "image",
+  //   "activated": true,
+  //   "langKey": "en",
+  //   "createdBy": "",
+  //   "createdDate": null,
+  //   "lastModifiedBy": "",
+  //   "lastModifiedDate": null,
+  //   "authorities": [
+  //     "ROLE_USER",
+  //   ],
+  //   "password": "password",
+  // };
+  final Map<String, dynamic> _userPaymentData = {
+    "id": null,
+    "amount": 0,
+    "status": "NOTPAID",
+    "packageId": 0,
+  };
 
   void addPackageSizeAndWeight(String packageSize, int weight) {
     _packageFormData["packageSize"] = packageSize;
@@ -65,20 +89,51 @@ class SendPackageController {
         packageData["senderPostalCode"],
     );
     
-    int? recipientAddressId = await postRequest(_recipientAddressFormData, 'addresses');
-    int? senderAddressId = await postRequest(_senderAddressFormData, 'addresses');
+    dynamic recipientAddressId = await postRequest(_recipientAddressFormData, 'addresses');
+    dynamic senderAddressId = await postRequest(_senderAddressFormData, 'addresses');
 
     if (recipientAddressId == null || senderAddressId == null) {
       return false;
     }
 
     //Set id's of start & stop locations
-    _packageFormData['startLocationId'] = senderAddressId;
-    _packageFormData['endLocationId'] = recipientAddressId;
+    _packageFormData['startLocationId'] = senderAddressId["id"];
+    _packageFormData['endLocationId'] = recipientAddressId["id"];
 
-    int? packageId = await postRequest(_packageFormData, 'delivery-packages');
+    //Retrieve id of sender currently logged in
+    dynamic sender = await getRequest('account');
+
+    if (sender == null) return false;
+    _packageFormData['senderId'] = "${sender["id"]}";
+
+    // !!!!CURSED!!!!
+    // Create user of receiver. Reason: not able to store this info
+    // without an existing user. This means registering a new user with a default
+    // password :-(. For prototype this should be fine...
+
+    // Please forgive me for I have sinned.
+    // _receiverAccountData["login"] = "${packageData["recipientFirstName"]}${packageData["recipientLastName"]}".toLowerCase();
+    // _receiverAccountData["firstName"] = packageData["recipientFirstName"];
+    // _receiverAccountData["lastName"] = packageData["recipientLastName"];
+    // _receiverAccountData["email"] = packageData["recipientEmail"];
+    // _receiverAccountData["createdBy"] = "${sender["login"]}";
+    // _receiverAccountData["lastModifiedBy"] = "${sender["login"]}";
+
+    // dynamic receiverId = await postRequest(_receiverAccountData, 'register');
+
+    // if (receiverId == null) return false;
+    // _packageFormData['receiverId'] = receiverId["id"];
+
+    dynamic packageId = await postRequest(_packageFormData, 'delivery-packages');
 
     if (packageId == null) {
+      return false;
+    }
+    _userPaymentData["amount"] = packageData["paymentAmount"];
+    _userPaymentData["packageId"] = packageId["id"];
+
+    dynamic userPaymentId = await postRequest(_userPaymentData, 'user-payments');
+    if (userPaymentId == null) {
       return false;
     } else {
       return true;
@@ -105,14 +160,13 @@ class SendPackageController {
     );
 
     if (response.statusCode == 201) {
-      var jsonResponse = jsonDecode(response.body);
-      return jsonResponse['id'];
+      return jsonDecode(response.body);
     } else {
       return null;
     }
   }
 
-  Future<int?> getRequest(String endPoint) async {
+  Future<dynamic> getRequest(String endPoint) async {
     var token = await storage.read(key: 'jwt');
 
     var headers = {
@@ -121,13 +175,13 @@ class SendPackageController {
       'Authorization': 'Bearer $token',
     };
 
-    var response = await http.post(
+    var response = await http.get(
       Uri.parse('$baseUrl/$endPoint'),
       headers: headers,
     );
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);;
+      return jsonDecode(response.body);
     } else {
       return null;
     }

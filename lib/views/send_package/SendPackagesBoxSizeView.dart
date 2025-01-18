@@ -74,7 +74,13 @@ class _SendPackagesViewState extends State<SendPackagesView> {
 
   void _submitPackageSizeForm() {
     if (_packageWeightFormKey.currentState!.validate()
-        && selectedBoxSize != null) {
+      && selectedBoxSize != null) {
+
+      Map<String, double> prices = {
+        "small": 3.95,
+        "medium": 4.95,
+        "big": 12.50,
+      };
 
       //Send selected items to the next view.
       Navigator.pushNamed(
@@ -83,6 +89,7 @@ class _SendPackagesViewState extends State<SendPackagesView> {
         arguments: <String, dynamic>{
           "packageSize": selectedBoxSize.toString().split('.').last,
           "packageWeight": int.parse(_packageWeightController.text),
+          "paymentAmount": prices[selectedBoxSize.toString().split('.').last],
           },
       );
     }
