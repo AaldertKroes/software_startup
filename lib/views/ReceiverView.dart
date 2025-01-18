@@ -59,7 +59,7 @@ class _ReceiverPageState extends State<ReceiverPage> {
               return Card(
                 child: ListTile(
                   title: Text('Pakket ID: ${package['id']}'),
-                  subtitle: Text('Afstand: ${package['distance']} km\nETA: $eta uur\n Gewicht: ${package['weight']} kg'),
+                  subtitle: Text('Afstand: ${package['distance']} km\nETA: $eta uur\nGewicht: ${package['weight']} kg'),
                 ),
               );
             },
