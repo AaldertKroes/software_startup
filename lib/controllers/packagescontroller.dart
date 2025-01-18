@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class PackagesController {
   final String baseUrl;
@@ -19,25 +19,54 @@ class PackagesController {
       'Authorization': 'Bearer $token',
     };
 
-    
     var response = await http.get(
       Uri.parse('$baseUrl/api/delivery-packages'),
       headers: headers,
     );
 
     if (response.statusCode == 200) {
-      
       return jsonDecode(response.body);
     } else {
       throw Exception("Kan pakketten niet ophalen: ${response.statusCode}");
     }
   }
 
-    Future<List<Map<String, dynamic>>> fetchUnderwayPackages() async {
-    var allPackages = await fetchPackages();
-    return allPackages
-        .where((package) => package['status'] == 'UNDERWAY')
-        .cast<Map<String, dynamic>>()
-        .toList();
+  Future<List<dynamic>> deliveredPackages() async {
+    List allPackages = await fetchPackages();
+    List delivered = [];
+
+    for (var i in allPackages) {
+      if (i['status'] == 'DELIVERED') {
+        delivered.add(i);
+      }
+    }
+
+    return delivered;
+  }
+
+  Future<List<dynamic>> notStartedPackages() async {
+    List allPackages = await fetchPackages();
+    List notStarted = [];
+
+    for (var i in allPackages) {
+      if (i['status'] == 'NOT_STARTED') {
+        notStarted.add(i);
+      }
+    }
+
+    return notStarted;
+  }
+
+  Future<List<dynamic>> underwayPackages() async {
+    List allPackages = await fetchPackages();
+    List underway = [];
+
+    for (var i in allPackages) {
+      if (i['status'] == 'UNDERWAY') {
+        underway.add(i);
+      }
+    }
+
+    return underway;
   }
 }

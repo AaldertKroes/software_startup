@@ -12,12 +12,12 @@ class ReceiverPage extends StatefulWidget {
 }
 
 class _ReceiverPageState extends State<ReceiverPage> {
-  late Future<List<Map<String, dynamic>>> underwayPackages;
+  late Future<List<dynamic>> underwayPackages;
 
   @override
   void initState() {
     super.initState();
-    underwayPackages = widget.controller.fetchUnderwayPackages();
+    underwayPackages = widget.controller.underwayPackages();
   }
 
   String calculateETA(int distance) {
@@ -37,7 +37,7 @@ class _ReceiverPageState extends State<ReceiverPage> {
       appBar: AppBar(
         title: const Text('Pakketjes in Bezorging'),
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
+      body: FutureBuilder<List<dynamic>>(
         future: underwayPackages,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
