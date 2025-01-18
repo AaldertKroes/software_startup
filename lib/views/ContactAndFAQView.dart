@@ -12,13 +12,6 @@ class ContactAndFAQView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Contact & FAQ',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
             SizedBox(height: 16),
             Text(
               'FAQ',

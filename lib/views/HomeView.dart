@@ -1,47 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:software_startup/common/CustomStyles.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key, required this.title});
-  final String title;
+  const HomeView({super.key});
 
   @override
   State<HomeView> createState() => _HomeViewState();
 }
 
 class _HomeViewState extends State<HomeView> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
+      backgroundColor: const Color(0xfffbfbfb),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            const Center(
+              child: Image(
+                image: AssetImage('assets/willem-rijdt-logo.png'),
+                width: 300,
+                height: 300,
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            Center(
+              child: Container(
+                height: 300,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    // Pas de redirectTo's aan wanneer de pagina's aangemaakt worden
+                    CustomStyles.willemRijdtButton(context, "Pakketten volgen", redirectTo: "/packages"),
+                    CustomStyles.willemRijdtButton(context, "Verstuur pakketje", redirectTo: null),
+                    CustomStyles.willemRijdtButton(context, "Geschiedenis bekijken", redirectTo: null),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
