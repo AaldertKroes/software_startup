@@ -54,7 +54,7 @@ class _SendPackagesViewState extends State<SendPackagesView> {
                 const SizedBox(height: 20),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: packageWeight(_packageWeightController),
+                  child: packageWeightFormFields(_packageWeightController),
                 ),
                 const SizedBox(height: 20),
                 // pick-up/sending location
@@ -160,7 +160,7 @@ class _SendPackagesViewState extends State<SendPackagesView> {
     );
   }
 
-  Widget packageWeight(
+  Widget packageWeightFormFields(
       TextEditingController weightController
       ) {
     return TextFormField(

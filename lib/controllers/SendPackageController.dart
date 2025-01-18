@@ -85,7 +85,7 @@ class SendPackageController {
     }
   }
 
-  Future<int?> postRequest(Map<String, dynamic> data, String endPoint) async {
+  Future<dynamic> postRequest(Map<String, dynamic> data, String endPoint) async {
     var payload = jsonEncode(
       data,
     );
@@ -107,6 +107,27 @@ class SendPackageController {
     if (response.statusCode == 201) {
       var jsonResponse = jsonDecode(response.body);
       return jsonResponse['id'];
+    } else {
+      return null;
+    }
+  }
+
+  Future<int?> getRequest(String endPoint) async {
+    var token = await storage.read(key: 'jwt');
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Accept': '*/*',
+      'Authorization': 'Bearer $token',
+    };
+
+    var response = await http.post(
+      Uri.parse('$baseUrl/$endPoint'),
+      headers: headers,
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);;
     } else {
       return null;
     }

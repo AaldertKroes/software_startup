@@ -41,7 +41,7 @@ class _SendPackagesAddressState extends State<SendPackagesAddress> {
             const SizedBox(height: 20),
             Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: addressForm(_recipientStreetController,
+            child: addressFormFields(_recipientStreetController,
               _recipientCityController,
               _recipientPostalCodeController),
             ),
@@ -53,7 +53,7 @@ class _SendPackagesAddressState extends State<SendPackagesAddress> {
             const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: addressForm(_senderStreetController,
+              child: addressFormFields(_senderStreetController,
                   _senderCityController,
                   _senderPostalCodeController),
             ),
@@ -76,24 +76,22 @@ class _SendPackagesAddressState extends State<SendPackagesAddress> {
     if (_packageAddressFormKey.currentState!.validate()) {
       final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
 
+      args["recipientStreet"] = _recipientStreetController.text;
+      args["recipientCity"] = _recipientCityController.text;
+      args["recipientPostalCode"] = _recipientPostalCodeController.text;
+      args["senderStreet"] = _senderStreetController.text;
+      args["senderCity"] = _senderCityController.text;
+      args["senderPostalCode"] = _senderPostalCodeController.text;
+
       Navigator.pushNamed(
         context,
         '/send_packages/recipient',
-        arguments: <String, dynamic>{
-          "packageSize": args['packageSize'],
-          "packageWeight": args['packageWeight'],
-          "recipientStreet": _recipientStreetController.text,
-          "recipientCity": _recipientCityController.text,
-          "recipientPostalCode": _recipientPostalCodeController.text,
-          "senderStreet": _senderStreetController.text,
-          "senderCity": _senderCityController.text,
-          "senderPostalCode": _senderPostalCodeController.text,
-        },
+        arguments: args,
       );
     }
   }
 
-  Widget addressForm(
+  Widget addressFormFields(
       TextEditingController streetController,
       TextEditingController cityController,
       TextEditingController postalController,

@@ -4,9 +4,10 @@ import 'package:software_startup/views/ContactAndFAQView.dart';
 import 'package:software_startup/views/HomeView.dart';
 import 'package:software_startup/views/LoginView.dart';
 import 'package:software_startup/views/PackagesView.dart';
-import 'package:software_startup/views/send_package/SendPackagesRecipientView.dart';
-import 'package:software_startup/views/send_package/SendPackagesView.dart';
+import 'package:software_startup/views/send_package/SendPackagesConfirmView.dart';
+import 'package:software_startup/views/send_package/SendPackagesBoxSizeView.dart';
 import 'package:software_startup/views/send_package/SendPackagesAddressView.dart';
+import 'package:software_startup/views/send_package/SendPackagesRecipientView.dart';
 import 'package:software_startup/views/ReceiverView.dart';
 
 void main() {
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         '/send_packages': (context) => const SendPackagesView(),
         '/send_packages/address': (context) => const SendPackagesAddress(),
         '/send_packages/recipient': (context) => const SendPackagesRecipient(),
+        '/send_packages/confirm': (context) => const SendPackagesConfirm(),
         '/contact' : (context) => ContactAndFAQView(),
         '/receiver' : (context) => ReceiverPage(controller: PackagesController(baseUrl: 'http://10.0.2.2:8080')),
       },
