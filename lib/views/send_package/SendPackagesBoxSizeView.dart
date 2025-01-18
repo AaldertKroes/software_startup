@@ -10,7 +10,7 @@ class SendPackagesView extends StatefulWidget {
   State<SendPackagesView> createState() => _SendPackagesViewState();
 }
 
-enum BoxSizes { small, medium, big }
+enum BoxSizes { Klein, Gemiddeld, Groot }
 
 class _SendPackagesViewState extends State<SendPackagesView> {
   final _packageWeightFormKey = GlobalKey<FormState>();
@@ -77,9 +77,9 @@ class _SendPackagesViewState extends State<SendPackagesView> {
       && selectedBoxSize != null) {
 
       Map<String, double> prices = {
-        "small": 3.95,
-        "medium": 4.95,
-        "big": 12.50,
+        "Klein": 3.95,
+        "Gemiddeld": 4.95,
+        "Groot": 12.50,
       };
 
       //Send selected items to the next view.
@@ -113,7 +113,7 @@ class _SendPackagesViewState extends State<SendPackagesView> {
       ),
       segments: const <ButtonSegment<BoxSizes>>[
         ButtonSegment<BoxSizes>(
-          value: BoxSizes.small,
+          value: BoxSizes.Klein,
           label: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -128,7 +128,7 @@ class _SendPackagesViewState extends State<SendPackagesView> {
           icon: Icon(Icons.pallet),
         ),
         ButtonSegment<BoxSizes>(
-          value: BoxSizes.medium,
+          value: BoxSizes.Gemiddeld,
           label: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -143,7 +143,7 @@ class _SendPackagesViewState extends State<SendPackagesView> {
           icon: Icon(Icons.pallet),
         ),
         ButtonSegment<BoxSizes>(
-          value: BoxSizes.big,
+          value: BoxSizes.Groot,
           label: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
