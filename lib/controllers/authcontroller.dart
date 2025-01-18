@@ -38,31 +38,4 @@ class Authcontroller{
       return false;
     }
   }
-
-  Future<List<DeliveryPackageModel>> getPackages() async {
-    String page = '0';
-    String size = '50';
-
-    var getPackagesHeaders = {
-      'Content-Type' : 'application/json',
-      'Accept' : '*/*',
-      'Authorization' : 'Bearer ${storage.read(key: 'jwt')}'
-    };
-
-    var response = await http.get(
-      Uri.parse('/delivery-packages?page=$page&size=$size'),
-      headers: getPackagesHeaders
-    );
-
-    if (response.statusCode == 200) {
-      var jsonResponse = jsonDecode(response.body);
-      List<DeliveryPackageModel> packages = [];
-      for (Map<String, dynamic> jsonPackage in jsonResponse) {
-        packages.add(DeliveryPackageModel.fromJson(jsonPackage));
-      }
-      return packages;
-    } else {
-      return [];
-    }
-  }
 }
