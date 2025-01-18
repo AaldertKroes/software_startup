@@ -4,7 +4,7 @@ import 'package:software_startup/views/PackagesView.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({Key? key}) : super(key: key);
-  final authcontroller = Authcontroller(baseUrl: 'http://10.0.2.2:8080/api');
+  final authcontroller = Authcontroller(baseUrl: 'https://fb32-178-84-112-235.ngrok-free.app/api');
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
