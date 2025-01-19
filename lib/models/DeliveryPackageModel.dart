@@ -5,7 +5,9 @@ class DeliveryPackageModel {
   double distance;
   String status;
   int startLocationId;
+  String? startLocation;
   int endLocationId;
+  String? endLocation;
   int senderId;
   int receiverId;
   int? deliveryDriverId;
@@ -17,7 +19,9 @@ class DeliveryPackageModel {
     required this.distance,
     required this.status,
     required this.startLocationId,
+    this.startLocation,
     required this.endLocationId,
+    this.endLocation,
     required this.senderId,
     required this.receiverId,
     this.deliveryDriverId,
