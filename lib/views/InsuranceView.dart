@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:software_startup/classes/Package.dart';
-import 'package:software_startup/widgets/PackageCard.dart';
+import 'package:software_startup/common/CustomStyles.dart';
 
 /* Deze view moet 'aangeroepen' worden vanuit een knop op een pakket in
 PackagesView. Dan kan het benodigde Package-object meegegeven worden. */
@@ -24,7 +24,12 @@ class _InsuranceViewState extends State<InsuranceView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            PackageCard(package: widget.package),
+            CustomStyles.willemRijdtPackageCard(
+                widget.package.id,
+                widget.package.description,
+                widget.package.status,
+                widget.package.weightGrams),
+            //PackageCard(package: widget.package),
             Text(
                 "Het verzekeren van dit pakket kost: ${widget.package.shippingPrice / 4}"),
             TextButton(
