@@ -24,11 +24,9 @@ class _InsuranceViewState extends State<InsuranceView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            CustomStyles.willemRijdtPackageCard(
-                widget.package.id,
-                widget.package.description,
-                widget.package.status,
-                widget.package.weightGrams),
+            CustomStyles.willemRijdtPackageCard(widget.package.id,
+                widget.package.status, widget.package.weightGrams,
+                packageDesc: widget.package.description),
             //PackageCard(package: widget.package),
             Text(
                 "Het verzekeren van dit pakket kost: ${widget.package.shippingPrice / 4}"),

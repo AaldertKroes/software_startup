@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:software_startup/classes/Package.dart';
 
 class CustomStyles {
   static ButtonStyle willemRijdtButtonStyle = ButtonStyle(
@@ -21,8 +22,9 @@ class CustomStyles {
             style: const TextStyle(color: Colors.white),
           ));
 
-  static Card willemRijdtPackageCard(int packageId, String packageDesc,
-          String packageStatus, int packageWeightGrams) =>
+  static Card willemRijdtPackageCard(
+          int packageId, Status packageStatus, int packageWeightGrams,
+          {String packageDesc = ''}) =>
       Card(
           margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           elevation: 4,
@@ -35,7 +37,7 @@ class CustomStyles {
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 16)),
                 const SizedBox(height: 8),
-                Text('Beschrijving: $packageDesc'),
+                if (packageDesc != '') Text('Beschrijving: $packageDesc'),
                 Text('Status: $packageStatus'),
                 Text('Gewicht: ${packageWeightGrams * 1000} kg'),
               ],
