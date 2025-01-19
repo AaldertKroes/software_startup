@@ -63,7 +63,7 @@ class PackagesAssignController {
       AddressModel curAddress = AddressModel.fromJson(jsonDecode(response.body));
       return "${curAddress.street} ${curAddress.postalCode}, ${curAddress.city}, ${curAddress.country}";
     } else {
-      throw Exception("Can adres niet ophalen: ${response.statusCode}");
+      throw Exception("Kan adres niet ophalen: ${response.statusCode}");
     }
   }
 
