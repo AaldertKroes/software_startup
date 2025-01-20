@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:software_startup/common/CustomStyles.dart';
 import 'package:software_startup/controllers/packagescontroller.dart';
+import 'package:software_startup/views/InsuranceView.dart';
 
 class PackagesView extends StatelessWidget {
   final PackagesController controller =
@@ -34,7 +35,14 @@ class PackagesView extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 var package = snapshot.data![index];
                 return CustomStyles.willemRijdtPackageCard(
-                    package['id'], package['status'], package['weight']);
+                    package['id'], package['status'], package['weight'],
+                    button: TextButton(
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    InsuranceView(id: package['id']))),
+                        child: const Text('Verzekeren')));
               },
             );
           }
