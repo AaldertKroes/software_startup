@@ -23,7 +23,7 @@ class CustomStyles {
           ));
 
   static Card willemRijdtPackageCard(
-          int packageId, Status packageStatus, int packageWeightGrams,
+          int packageId, String packageStatus, int packageWeightGrams,
           {String packageDesc = '', Widget? button}) =>
       Card(
           margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),

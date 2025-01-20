@@ -8,11 +8,11 @@ class Package {
   late double shippingPrice;
   late String originAddress;
   late String destinationAddress;
-  late Status status;
+  late String status;
 
   Package(this.id, this.name, this.description, this.packagePrice,
       this.weightGrams);
 }
 
-// Hoe geeft de backend de enum-waarde terug?
-enum Status { NOT_STARTED, UNDERWAY, DELIVERED }
+// De backend geeft de status terug als String
+//enum Status { NOT_STARTED, UNDERWAY, DELIVERED }
