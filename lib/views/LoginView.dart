@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:software_startup/controllers/authcontroller.dart';
+import 'package:software_startup/controllers/AuthController.dart';
 import 'package:software_startup/views/PackagesView.dart';
 
 class LoginView extends StatelessWidget {
-  LoginView({Key? key}) : super(key: key);
-  final authcontroller = Authcontroller(baseUrl: 'http://10.0.2.2:8080/api');
+
+  final AuthController;
+
+  LoginView({Key? key, required this.AuthController}) : super(key: key);
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -32,7 +34,7 @@ class LoginView extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  authcontroller.login(usernameController.text, passwordController.text).then((value) {
+                  AuthController.login(usernameController.text, passwordController.text).then((value) {
                     if (value == true) {
                       Navigator.pushNamed(context, '/home');
                     } else {

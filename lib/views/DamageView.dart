@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class PackagesView extends StatelessWidget {
+class DamageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Packages View')),
+      appBar: AppBar(title: Text('Damage View')),
       body: Center(
         child: Column(
         children: <Widget>[
-        Text('Welkom op de Packages Page!'),
+        Text('Welkom op de Damage Page!'),
           ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/packages_map');
+              Navigator.pushNamed(context, '/damage_map');
             },
-            child: Text('Bekijk pakketten op kaart'),
+            child: Text('Bekijk schade op kaart'),
           ),
         ],
         ),
