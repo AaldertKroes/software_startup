@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => LoginView(),
         '/home': (context) => const HomeView(),
         '/packages': (context) => PackagesView(),
-        '/packages-assign': (context) => PackagesAssignView(controller: PackagesAssignController(baseUrl: 'https://5239-178-84-112-235.ngrok-free.app')),
+        '/packages-assign': (context) => PackagesAssignView(controller: PackagesAssignController(baseUrl: 'http://10.0.2.2:8080')),
         '/contact' : (context) => ContactAndFAQView(),
         '/receiver' : (context) => ReceiverPage(controller: PackagesController(baseUrl: 'http://10.0.2.2:8080')),
       },
