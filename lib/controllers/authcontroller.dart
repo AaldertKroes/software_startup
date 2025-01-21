@@ -5,13 +5,14 @@ import 'dart:convert';
 import 'package:software_startup/models/DeliveryPackageModel.dart';
 
 // Write value
-class AuthController{
+class Authcontroller{
   final String baseUrl;
   final storage = const FlutterSecureStorage();
 
-  AuthController({required this.baseUrl});
+  Authcontroller({required this.baseUrl});
 
   Future<bool> login(String username, String password) async{
+
     var loginPayload = jsonEncode({
       'username': username,
       'password': password,
@@ -25,14 +26,14 @@ class AuthController{
 
     var response = await http.post(
       Uri.parse('$baseUrl/api/authenticate'),
-      body: loginPayload,
       headers: loginHeaders,
+      body: loginPayload,
     );
 
     if(response.statusCode == 200){
       var jsonResponse = jsonDecode(response.body);
       await storage.write(key: 'jwt', value: jsonResponse['id_token']);
-      return true;
+          return true;
     }else{
       return false;
     }

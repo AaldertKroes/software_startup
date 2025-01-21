@@ -73,7 +73,13 @@ class PackagesController {
   }
 
   Future<bool> createReturnPackage(Map<String, dynamic> package) async {
+    // create new package with status 'NOT_STARTED', switch origin and destination and remove id
 
-    return await apiController.PostData('/api/delivery-packages', package);
+    package['status'] = 'NOT_STARTED';
+    package['originAddress'] = package['destinationAddress'];
+    package['destinationAddress'] = package['originAddress'];
+    package.remove('id');
+
+    return await apiController.PostData('api/delivery-packages', package);
   }
 }

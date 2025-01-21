@@ -12,7 +12,7 @@ import 'package:software_startup/controllers/apicontroller.dart';
 import 'package:software_startup/views/DamageView.dart';
 
 void main() {
-  const String baseUrl = 'http://192.168.2.9:8080';
+  const String baseUrl = 'http://10.0.0.2:8080';
   final apiController = ApiController(baseUrl: baseUrl);
   runApp(MyApp(baseUrl: baseUrl, apiController: apiController));
 }
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => LoginView(authController: AuthController(baseUrl: baseUrl)),
+        '/': (context) => LoginView(authController: Authcontroller(baseUrl: baseUrl)),
         '/home': (context) => const HomeView(),
         '/packages-assign': (context) => PackagesAssignView(controller: PackagesAssignController(baseUrl: 'http://10.0.2.2:8080')),
         '/packages': (context) => PackagesView(controller: PackagesController(baseUrl: baseUrl, apiController: apiController)),
