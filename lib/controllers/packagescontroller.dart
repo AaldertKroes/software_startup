@@ -1,14 +1,14 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-import 'package:software_startup/classes/Package.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:software_startup/controllers/apicontroller.dart';
 
 class PackagesController {
+  final ApiController apiController;
   final String baseUrl;
   final storage = const FlutterSecureStorage();
 
-  PackagesController({required this.baseUrl});
+  PackagesController({required this.baseUrl, required this.apiController});
 
   Future<List<dynamic>> fetchPackages() async {
     String? token = await storage.read(key: 'jwt');
@@ -72,28 +72,7 @@ class PackagesController {
     return underway;
   }
 
-  Future<Package> getPackageById(int id) async {
-    String? token = await storage.read(key: 'jwt');
-    if (token == null) {
-      throw Exception('JWT token niet gevonden. Log eerst in.');
-    }
-
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
-    var response = await http.get(
-      Uri.parse('$baseUrl/api/delivery-packages/$id'),
-      headers: headers,
-    );
-
-    if (response.statusCode == 200) {
-      Map<String, dynamic> decodedJson = jsonDecode(response.body);
-      return Package(
-          decodedJson['id'], decodedJson['status'], decodedJson['weight']);
-    } else {
-      throw Exception("Kan pakket niet ophalen: ${response.statusCode}");
-    }
+  Future<bool> createReturnPackage(Map<String, dynamic> package) async {
+    return await apiController.PostData('/api/delivery-packages', package);
   }
 }

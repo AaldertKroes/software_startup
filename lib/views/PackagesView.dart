@@ -6,9 +6,23 @@ import 'package:software_startup/common/CustomStyles.dart';
 import 'package:software_startup/controllers/packagescontroller.dart';
 import 'package:software_startup/views/InsuranceView.dart';
 
-class PackagesView extends StatelessWidget {
-  final PackagesController controller =
-      PackagesController(baseUrl: 'http://10.0.2.2:8080');
+class PackagesView extends StatefulWidget {
+  final PackagesController controller;
+
+  const PackagesView({Key? key, required this.controller}) : super(key: key);
+
+  @override
+  _PackagesViewState createState() => _PackagesViewState();
+}
+
+class _PackagesViewState extends State<PackagesView> {
+  late Future<List<dynamic>> deliveredPackages;
+
+  @override
+  void initState() {
+    super.initState();
+    deliveredPackages = widget.controller.deliveredPackages();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +31,8 @@ class PackagesView extends StatelessWidget {
         title: const Text('Pakketten'),
       ),
       body: FutureBuilder<List<dynamic>>(
-        future: controller.deliveredPackages(),
-        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+        future: deliveredPackages,
+        builder: (BuildContext context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
