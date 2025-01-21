@@ -62,6 +62,7 @@ class PackagesController {
   Future<List<dynamic>> underwayPackages() async {
     List allPackages = await fetchPackages();
     List underway = [];
+    print (allPackages);
 
     for (var i in allPackages) {
       if (i['status'] == 'UNDERWAY') {
