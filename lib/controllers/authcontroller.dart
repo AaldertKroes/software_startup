@@ -27,8 +27,6 @@ class Authcontroller{
       headers: loginHeaders,
       body: loginPayload,
     );
-    print(response);
-    print(response.statusCode);
 
     if(response.statusCode == 200){
       var jsonResponse = jsonDecode(response.body);
