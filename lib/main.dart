@@ -10,7 +10,7 @@ import 'package:software_startup/controllers/apicontroller.dart';
 import 'package:software_startup/views/DamageView.dart';
 
 void main() {
-  const String baseUrl = 'http://192.168.2.9:8080';
+  const String baseUrl = 'http://10.0.2.2:8080';
   final apiController = ApiController(baseUrl: baseUrl);
   runApp(MyApp(baseUrl: baseUrl, apiController: apiController));
 }
