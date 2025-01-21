@@ -68,7 +68,7 @@ class CustomStyles {
   }
 
   static Card willemRijdtPackageCard(
-          int packageId, String packageStatus, int packageWeightGrams,
+          int? packageId, String packageStatus, double? packageWeightGrams,
           {String packageDesc = '', Widget? button}) =>
       Card(
           margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -84,7 +84,7 @@ class CustomStyles {
                 const SizedBox(height: 8),
                 if (packageDesc != '') Text('Beschrijving: $packageDesc'),
                 Text('Status: $packageStatus'),
-                Text('Gewicht: ${packageWeightGrams / 1000} kg'),
+                Text('Gewicht: ${packageWeightGrams! / 1000} kg'),
                 if (button != null) button,
               ],
             ),
