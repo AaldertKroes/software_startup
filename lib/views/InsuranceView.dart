@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:software_startup/classes/Package.dart';
+import 'package:software_startup/controllers/apicontroller.dart';
+import 'package:software_startup/models/DeliveryPackageModel.dart';
 import 'package:software_startup/common/CustomStyles.dart';
 import 'package:software_startup/controllers/packagescontroller.dart';
 
@@ -13,12 +14,14 @@ class InsuranceView extends StatefulWidget {
 }
 
 class _InsuranceViewState extends State<InsuranceView> {
-  final PackagesController controller =
-      PackagesController(baseUrl: 'http://10.0.2.2:8080');
+  final PackagesController controller = PackagesController(
+      baseUrl: 'http://10.0.2.2:8080',
+      apiController: ApiController(baseUrl: 'http://10.0.2.2:8080'));
 
   @override
   Widget build(BuildContext context) {
-    Future<Package>? package = controller.getPackageById(widget.id);
+    Future<DeliveryPackageModel>? package =
+        controller.getPackageById(widget.id);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
