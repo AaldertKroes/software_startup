@@ -29,45 +29,47 @@ class _SendPackagesAddressState extends State<SendPackagesAddress> {
         title: const Text("Ophaal & bezorgadres"),
       ),
       backgroundColor: CustomStyles.backgroundColor,
-      body: Form(
-        key: _packageAddressFormKey,
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            const Text(
-                "Bezorgadres invullen",
-                style: TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 20),
-            Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: addressFormFields(_recipientStreetController,
-              _recipientCityController,
-              _recipientPostalCodeController),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              "Ophaaladres invullen",
-              style: TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: addressFormFields(_senderStreetController,
-                  _senderCityController,
-                  _senderPostalCodeController),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _submitPackageAddressForm,
-              style: CustomStyles.willemRijdtButtonStyle,
-              child: const Text(
-                'Volgende',
-                style: TextStyle(color: Colors.white),
+      body: SingleChildScrollView(
+        child: Form(
+          key: _packageAddressFormKey,
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              const Text(
+                  "Bezorgadres invullen",
+                  style: TextStyle(fontSize: 16),
               ),
-            ),
-          ],
-        )
+              const SizedBox(height: 20),
+              Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: addressFormFields(_recipientStreetController,
+                _recipientCityController,
+                _recipientPostalCodeController),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                "Ophaaladres invullen",
+                style: TextStyle(fontSize: 16),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: addressFormFields(_senderStreetController,
+                    _senderCityController,
+                    _senderPostalCodeController),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _submitPackageAddressForm,
+                style: CustomStyles.willemRijdtButtonStyle,
+                child: const Text(
+                  'Volgende',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          )
+        ),
       ),
     );
   }

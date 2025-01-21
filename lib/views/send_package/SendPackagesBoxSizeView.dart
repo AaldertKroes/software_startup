@@ -27,48 +27,50 @@ class _SendPackagesViewState extends State<SendPackagesView> {
       ),
       backgroundColor: CustomStyles.backgroundColor,
       body: Form(
-          key: _packageWeightFormKey,
+        key: _packageWeightFormKey,
+        child: SingleChildScrollView(
           child: Column(
-              children: [
-                const SizedBox(height: 20),
-                const Text(
-                  'Selecteer een pakketgrootte:',
-                  style: TextStyle(fontSize: 16),
+            children: [
+              const SizedBox(height: 20),
+              const Text(
+                'Selecteer een pakketgrootte:',
+                style: TextStyle(fontSize: 16),
+              ),
+              const SizedBox(height: 20),
+              // Select package size
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    boxSizeSelection(),
+                  ],
                 ),
-                const SizedBox(height: 20),
-                // Select package size
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      boxSizeSelection(),
-                    ],
-                  ),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Pakket gewicht',
+                style: TextStyle(fontSize: 16),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: packageWeightFormFields(_packageWeightController),
+              ),
+              const SizedBox(height: 20),
+              // pick-up/sending location
+              ElevatedButton(
+                onPressed: _submitPackageSizeForm,
+                style: CustomStyles.willemRijdtButtonStyle,
+                child: const Text(
+                  'Volgende',
+                  style: TextStyle(color: Colors.white),
                 ),
-                const SizedBox(height: 20),
-                const Text(
-                  'Pakket gewicht',
-                  style: TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: packageWeightFormFields(_packageWeightController),
-                ),
-                const SizedBox(height: 20),
-                // pick-up/sending location
-                ElevatedButton(
-                  onPressed: _submitPackageSizeForm,
-                  style: CustomStyles.willemRijdtButtonStyle,
-                  child: const Text(
-                    'Volgende',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ],
-            )
-          ),
+              ),
+            ],
+          )
+        ),
+      ),
     );
   }
 
