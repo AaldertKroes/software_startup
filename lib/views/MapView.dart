@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:software_startup/mocks/packageController_map.dart';
-import 'package:software_startup/classes/Package.dart';
+import 'package:software_startup/models/DeliveryPackageModel.dart';
 
 class PackagesMapView extends StatelessWidget {
   final PackagesController packagesController = PackagesController();
@@ -10,7 +10,7 @@ class PackagesMapView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Verkrijg de lijst van pakketten
-    List<Package> packages = packagesController.getPackages();
+    List<DeliveryPackageModel> packages = packagesController.getPackages();
 
     // Maak markers voor elk pakket
     List<Marker> markers = packages.map((package) {
