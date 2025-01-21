@@ -1,7 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
-import 'package:software_startup/models/DeliveryPackageModel.dart';
 
 // Write value
 class AuthController {
