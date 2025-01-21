@@ -7,12 +7,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:software_startup/controllers/apicontroller.dart';
 
 import 'package:software_startup/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp(baseUrl: 'http://10.0.0.2:8080'));
+    await tester.pumpWidget(MyApp(baseUrl: 'http://10.0.2.2:8080', apiController: ApiController(baseUrl: 'http://10.0.2.2:8080'),));
   });
 }

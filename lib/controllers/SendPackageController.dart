@@ -20,13 +20,13 @@ class SendPackageController {
     "street": "",
     "city": "",
     "postalCode": "",
-    "county": "The Netherlands",
+    "county": "",
   };
   final Map<String, dynamic> _senderAddressFormData = {
     "street": "",
     "city": "",
     "postalCode": "",
-    "county": "The Netherlands",
+    "county": "",
   };
   // final Map<String, dynamic> _receiverAccountData = {
   //   "id": null,
@@ -69,9 +69,11 @@ class SendPackageController {
     _recipientAddressFormData["street"] = recipientStreet;
     _recipientAddressFormData["city"] = recipientCity;
     _recipientAddressFormData["postalCode"] = recipientPostal;
+    _recipientAddressFormData["country"] = "The Netherlands";
     _senderAddressFormData["street"] = senderStreet;
     _senderAddressFormData["city"] = senderCity;
     _senderAddressFormData["postalCode"] = senderPostal;
+    _senderAddressFormData["country"] = "The Netherlands";
   }
 
   // When confirming delivery: communicate everything with the backend.
