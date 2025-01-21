@@ -1,17 +1,16 @@
 class Package {
   final int id;
-  final String name;
-  final String description;
-  final double packagePrice;
-  final int weightGrams; // Gewicht in gram
+  final int weight; // Gewicht in gram
+  final String status;
 
+  late double packagePrice;
+  late String description;
   late double shippingPrice;
   late String originAddress;
   late String destinationAddress;
-  late String status;
+  late String name;
 
-  Package(this.id, this.name, this.description, this.packagePrice,
-      this.weightGrams);
+  Package(this.id, this.status, this.weight);
 }
 
 // De backend geeft de status terug als String
