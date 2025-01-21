@@ -71,9 +71,4 @@ class PackagesController {
 
     return underway;
   }
-
-  Future<bool> createReturnPackage(Map<String, dynamic> package) async {
-
-    return await apiController.PostData('/api/delivery-packages', package);
-  }
 }
