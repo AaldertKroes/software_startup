@@ -87,6 +87,22 @@ class _SendPackagesConfirmState extends State<SendPackagesConfirm> {
               style: TextStyle(color: Colors.white),
             ),
           ),
+          const SizedBox(height: 8),
+          ElevatedButton(
+            onPressed: () => {
+              if (mounted) {
+                Navigator.popUntil(
+                context,
+                ModalRoute.withName('/home'),
+                )
+              }
+            },
+            style: CustomStyles.willemRijdtButtonStyle,
+            child: const Text(
+              "Annuleer verzending",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
         ],
         ),
       );
