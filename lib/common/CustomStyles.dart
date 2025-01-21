@@ -67,20 +67,6 @@ class CustomStyles {
     );
   }
 
-  static ElevatedButton willemRijdtButton(BuildContext context, String text,
-          {String? redirectTo}) =>
-      ElevatedButton(
-          onPressed: () {
-            redirectTo != null
-                ? Navigator.pushNamed(context, redirectTo)
-                : null;
-          },
-          style: CustomStyles.willemRijdtButtonStyle,
-          child: Text(
-            text,
-            style: const TextStyle(color: Colors.white),
-          ));
-
   static Card willemRijdtPackageCard(
           int packageId, String packageStatus, int packageWeightGrams,
           {String packageDesc = '', Widget? button}) =>
