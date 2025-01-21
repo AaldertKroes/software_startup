@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:software_startup/controllers/AuthController.dart';
+import 'package:software_startup/controllers/authcontroller.dart';
 import 'package:software_startup/views/PackagesView.dart';
 
 class LoginView extends StatelessWidget {
+  final AuthController authController;
 
-  final AuthController;
-
-  LoginView({Key? key, required this.AuthController}) : super(key: key);
+  LoginView({Key? key, required this.authController}) : super(key: key);
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -34,8 +33,8 @@ class LoginView extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  AuthController.login(usernameController.text, passwordController.text).then((value) {
-                    if (value == true) {
+                  authController.login(usernameController.text, passwordController.text).then((value) {
+                    if (value) {
                       Navigator.pushNamed(context, '/home');
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:software_startup/mocks/packageController_map.dart';
-import 'package:software_startup/models/Package.dart';
+import 'package:software_startup/classes/Package.dart';
 
 class PackagesMapView extends StatelessWidget {
   final PackagesController packagesController = PackagesController();
@@ -17,7 +17,8 @@ class PackagesMapView extends StatelessWidget {
       return Marker(
         width: 80.0,
         height: 80.0,
-        point: LatLng(package.latitude, package.longitude),
+        //point: LatLng(package.latitude, package.longitude),
+        point: LatLng(53.123, 6.123),
         builder: (ctx) => Icon(
           Icons.location_on,
           color: Colors.red,

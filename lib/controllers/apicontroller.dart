@@ -10,7 +10,7 @@ class ApiController {
   Future<List<dynamic>> GetData(extension) async{
     String? token = await storage.read(key: 'jwt');
     var response = await http.get(
-      Uri.parse('$baseUrl + $extension'),
+      Uri.parse('$baseUrl/$extension'),
       headers: {
         'Content-Type': 'application/json',
         'Accept': '*/*',
@@ -27,13 +27,13 @@ class ApiController {
   Future<bool> PostData(extension, data) async{
     String? token = await storage.read(key: 'jwt');
     var response = await http.post(
-      Uri.parse('$baseUrl + $extension'),
-      body: jsonEncode(data),
+      Uri.parse('$baseUrl/$extension'),
       headers: {
         'Content-Type': 'application/json',
         'Accept': '*/*',
         'Authorization': 'Bearer $token',
       },
+      body: json.encode(data),
     );
     if(response.statusCode == 200 || response.statusCode == 201){
       return true;
