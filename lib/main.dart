@@ -3,7 +3,7 @@ import 'package:software_startup/views/HomeView.dart';
 import 'package:software_startup/views/LoginView.dart';
 import 'package:software_startup/views/PackagesView.dart';
 import 'package:software_startup/views/MapView.dart';
-import 'package:software_startup/controllers/AuthController.dart';
+import 'package:software_startup/controllers/authcontroller.dart';
 
 void main() {
   const String baseUrl = 'http://10.0.2.2:8080/api';

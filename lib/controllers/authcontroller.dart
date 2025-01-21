@@ -3,13 +3,14 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 
 // Write value
-class Authcontroller{
+class AuthController{
   final String baseUrl;
   final storage = const FlutterSecureStorage();
 
-  Authcontroller({required this.baseUrl});
+  AuthController({required this.baseUrl});
 
   Future<bool> login(String username, String password) async{
+
     var loginPayload = jsonEncode({
       'username': username,
       'password': password,
@@ -30,8 +31,7 @@ class Authcontroller{
     if(response.statusCode == 200){
       var jsonResponse = jsonDecode(response.body);
       await storage.write(key: 'jwt', value: jsonResponse['id_token']);
-    //TODO: Retrofit gebruiken en speciale klasse voor JWT token aanmaken
-      return true;
+          return true;
     }else{
       return false;
     }

@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:software_startup/models/Package.dart';
 
+class Package{
+  final String id;
+  final String name;
+  final double latitude;
+  final double longitude;
+
+  Package({required this.id, required this.name, required this.latitude, required this.longitude});
+}
+
 class PackagesController {
   List<Package> getPackages() {
     // Hier zou je normaal gesproken data ophalen van een API
