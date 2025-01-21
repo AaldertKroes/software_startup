@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:software_startup/controllers/PackagesAssignController.dart';
 import 'package:software_startup/controllers/packagescontroller.dart';
 import 'package:software_startup/views/ContactAndFAQView.dart';
 import 'package:software_startup/views/HomeView.dart';
 import 'package:software_startup/views/LoginView.dart';
+import 'package:software_startup/views/PackagesAssignView.dart';
 import 'package:software_startup/views/PackagesView.dart';
 import 'package:software_startup/views/ReceiverView.dart';
 import 'package:software_startup/controllers/authcontroller.dart';
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LoginView(authController: AuthController(baseUrl: baseUrl)),
         '/home': (context) => const HomeView(),
+        '/packages-assign': (context) => PackagesAssignView(controller: PackagesAssignController(baseUrl: 'http://10.0.2.2:8080')),
         '/packages': (context) => PackagesView(controller: PackagesController(baseUrl: baseUrl, apiController: apiController)),
         '/contact' : (context) => ContactAndFAQView(),
         '/receiver' : (context) => ReceiverPage(controller: PackagesController(baseUrl: baseUrl, apiController: apiController)),
