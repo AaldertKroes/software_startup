@@ -33,13 +33,14 @@ class _InsuranceViewState extends State<InsuranceView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomStyles.willemRijdtPackageCard(snapshot.data!.id,
-                            snapshot.data!.status, snapshot.data!.weightGrams,
-                            packageDesc: snapshot.data!.description,
+                            snapshot.data!.status, snapshot.data!.weight,
+                            //packageDesc: snapshot.data!.description,
                             button: TextButton(
                                 onPressed: () => {},
                                 child: const Text('Verzekeren'))),
                         Text(
-                            'Het verzekeren van dit pakket kost: ${snapshot.data!.shippingPrice / 4}')
+                            //'Het verzekeren van dit pakket kost: ${snapshot.data!.shippingPrice / 4}'
+                            '')
                       ]);
                 } else if (snapshot.hasError) {
                   return Text(
