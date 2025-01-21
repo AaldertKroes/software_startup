@@ -89,7 +89,9 @@ class PackagesController {
     );
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      Map<String, dynamic> decodedJson = jsonDecode(response.body);
+      return Package(
+          decodedJson['id'], decodedJson['status'], decodedJson['weight']);
     } else {
       throw Exception("Kan pakket niet ophalen: ${response.statusCode}");
     }
