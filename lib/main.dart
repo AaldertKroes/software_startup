@@ -7,13 +7,20 @@ import 'package:software_startup/views/LoginView.dart';
 import 'package:software_startup/views/PackagesAssignView.dart';
 import 'package:software_startup/views/PackagesView.dart';
 import 'package:software_startup/views/ReceiverView.dart';
+import 'package:software_startup/controllers/authcontroller.dart';
+import 'package:software_startup/controllers/apicontroller.dart';
+import 'package:software_startup/views/DamageView.dart';
 
 void main() {
-  runApp(const MyApp());
+  const String baseUrl = 'http://192.168.2.9:8080';
+  final apiController = ApiController(baseUrl: baseUrl);
+  runApp(MyApp(baseUrl: baseUrl, apiController: apiController));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String baseUrl;
+  final ApiController apiController;
+  const MyApp({super.key, required this.baseUrl, required this.apiController});
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +32,17 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => LoginView(),
+        '/': (context) => LoginView(authController: AuthController(baseUrl: baseUrl)),
         '/home': (context) => const HomeView(),
-        '/packages': (context) => PackagesView(),
         '/packages-assign': (context) => PackagesAssignView(controller: PackagesAssignController(baseUrl: 'http://10.0.2.2:8080')),
+        '/packages': (context) => PackagesView(controller: PackagesController(baseUrl: baseUrl, apiController: apiController)),
         '/contact' : (context) => ContactAndFAQView(),
-        '/receiver' : (context) => ReceiverPage(controller: PackagesController(baseUrl: 'http://10.0.2.2:8080')),
+        '/receiver' : (context) => ReceiverPage(controller: PackagesController(baseUrl: baseUrl, apiController: apiController)),
+        '/damage' : (context) {
+          final package = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    return DamageView(controller: PackagesController(baseUrl: baseUrl, apiController: apiController), package: package);
       },
+    },
     );
   }
 }
