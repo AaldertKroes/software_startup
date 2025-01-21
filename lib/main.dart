@@ -10,7 +10,7 @@ import 'package:software_startup/controllers/apicontroller.dart';
 import 'package:software_startup/views/DamageView.dart';
 
 void main() {
-  const String baseUrl = 'https://3b85-145-33-102-21.ngrok-free.app';
+  const String baseUrl = 'http://10.0.0.2:8080';
   final apiController = ApiController(baseUrl: baseUrl);
   runApp(MyApp(baseUrl: baseUrl, apiController: apiController));
 }
