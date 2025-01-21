@@ -39,7 +39,7 @@ class CustomStyles {
                 const SizedBox(height: 8),
                 if (packageDesc != '') Text('Beschrijving: $packageDesc'),
                 Text('Status: $packageStatus'),
-                Text('Gewicht: ${packageWeightGrams * 1000} kg'),
+                Text('Gewicht: ${packageWeightGrams / 1000} kg'),
                 if (button != null) button,
               ],
             ),
