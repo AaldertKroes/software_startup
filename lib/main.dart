@@ -10,7 +10,7 @@ import 'package:software_startup/controllers/apicontroller.dart';
 import 'package:software_startup/views/DamageView.dart';
 
 void main() {
-  const String baseUrl = 'http://192.168.2.9:8080';
+  const String baseUrl = 'https://3b85-145-33-102-21.ngrok-free.app';
   final apiController = ApiController(baseUrl: baseUrl);
   runApp(MyApp(baseUrl: baseUrl, apiController: apiController));
 }
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => LoginView(authController: AuthController(baseUrl: baseUrl)),
+        '/': (context) => LoginView(authController: Authcontroller(baseUrl: baseUrl)),
         '/home': (context) => const HomeView(),
         '/packages': (context) => PackagesView(controller: PackagesController(baseUrl: baseUrl, apiController: apiController)),
         '/contact' : (context) => ContactAndFAQView(),
