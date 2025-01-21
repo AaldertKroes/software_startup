@@ -7,7 +7,7 @@ import 'package:software_startup/controllers/packagescontroller.dart';
 class InsuranceView extends StatefulWidget {
   //final InsuranceController controller = InsuranceController();
   InsuranceView({super.key, required this.id});
-  final int id;
+  final int? id;
 
   @override
   _InsuranceViewState createState() => _InsuranceViewState();
@@ -21,7 +21,7 @@ class _InsuranceViewState extends State<InsuranceView> {
   @override
   Widget build(BuildContext context) {
     Future<DeliveryPackageModel>? package =
-        controller.getPackageById(widget.id);
+        controller.getPackageById(widget.id!);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,

@@ -1,17 +1,16 @@
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
-
 import 'package:software_startup/models/DeliveryPackageModel.dart';
 
 // Write value
-class AuthController{
+class AuthController {
   final String baseUrl;
   final storage = const FlutterSecureStorage();
 
   AuthController({required this.baseUrl});
 
-  Future<bool> login(String username, String password) async{
+  Future<bool> login(String username, String password) async {
     var loginPayload = jsonEncode({
       'username': username,
       'password': password,
@@ -29,11 +28,11 @@ class AuthController{
       headers: loginHeaders,
     );
 
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       await storage.write(key: 'jwt', value: jsonResponse['id_token']);
       return true;
-    }else{
+    } else {
       return false;
     }
   }
