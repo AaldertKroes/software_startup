@@ -20,7 +20,7 @@ import 'package:software_startup/controllers/SenderPaymentController.dart';
 
 
 void main() {
-  const String baseUrl = 'https://3b85-145-33-102-21.ngrok-free.app';
+  const String baseUrl = 'http://10.0.0.2:8080';
   final apiController = ApiController(baseUrl: baseUrl);
 
   final packagesController = PackagesController(baseUrl: baseUrl, apiController: apiController);

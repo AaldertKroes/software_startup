@@ -19,6 +19,7 @@ dependencies:
   flutter_map: ^4.0.0
   latlong2: ^0.8.1
   mailer: ^6.4.1
+  geocoding: ^2.0.4
 
 dev_dependencies:
   flutter_test:
