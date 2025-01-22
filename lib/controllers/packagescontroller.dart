@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:software_startup/controllers/apicontroller.dart';
 
 class PackagesController {
@@ -55,7 +56,6 @@ class PackagesController {
         notStarted.add(i);
       }
     }
-
     return notStarted;
   }
 
@@ -68,12 +68,10 @@ class PackagesController {
         underway.add(i);
       }
     }
-
     return underway;
   }
 
   Future<bool> createReturnPackage(Map<String, dynamic> package) async {
-    // create new package with status 'NOT_STARTED', switch origin and destination and remove id
 
     package['status'] = 'NOT_STARTED';
     package['originAddress'] = package['destinationAddress'];
@@ -81,5 +79,15 @@ class PackagesController {
     package.remove('id');
 
     return await apiController.PostData('api/delivery-packages', package);
+  }
+
+  Future<List> getAddress() async {
+    final underwaypackages = await underwayPackages();
+    List address = [];
+    for (var i in underwaypackages) {
+      address.add(await apiController.GetData('api/addresses/${i['id']}'));
+    }
+    print(address);
+    return address;
   }
 }

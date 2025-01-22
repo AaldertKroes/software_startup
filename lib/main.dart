@@ -8,9 +8,10 @@ import 'package:software_startup/views/ReceiverView.dart';
 import 'package:software_startup/controllers/authcontroller.dart';
 import 'package:software_startup/controllers/apicontroller.dart';
 import 'package:software_startup/views/DamageView.dart';
+import 'package:software_startup/views/MapView.dart';
 
 void main() {
-  const String baseUrl = 'http://10.0.0.2:8080';
+  const String baseUrl = 'https://3b85-145-33-102-21.ngrok-free.app';
   final apiController = ApiController(baseUrl: baseUrl);
   runApp(MyApp(baseUrl: baseUrl, apiController: apiController));
 }
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         '/packages': (context) => PackagesView(controller: PackagesController(baseUrl: baseUrl, apiController: apiController)),
         '/contact' : (context) => ContactAndFAQView(),
         '/receiver' : (context) => ReceiverPage(controller: PackagesController(baseUrl: baseUrl, apiController: apiController)),
+        '/map' : (context) => PackagesMapView(controller: PackagesController(baseUrl: baseUrl, apiController: apiController)),
         '/damage' : (context) {
           final package = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     return DamageView(controller: PackagesController(baseUrl: baseUrl, apiController: apiController), package: package);
