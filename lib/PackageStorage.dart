@@ -9,4 +9,3 @@ class PackageStorage {
     _deliveredPackageIds.addAll(packages.map((p) => p['id'].toString()));
   }
 }
-
