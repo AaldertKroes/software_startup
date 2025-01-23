@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:software_startup/controllers/PackagesAssignController.dart';
+import 'package:software_startup/controllers/PackageStatusCheckerController.dart';
 import 'package:software_startup/controllers/packagescontroller.dart';
 import 'package:software_startup/views/ContactAndFAQView.dart';
 import 'package:software_startup/views/HomeView.dart';
@@ -11,13 +12,20 @@ import 'package:software_startup/views/send_package/SendPackagesBoxSizeView.dart
 import 'package:software_startup/views/send_package/SendPackagesAddressView.dart';
 import 'package:software_startup/views/send_package/SendPackagesRecipientView.dart';
 import 'package:software_startup/views/ReceiverView.dart';
-import 'package:software_startup/controllers/authcontroller.dart';
+import 'package:software_startup/controllers/AuthController.dart';
 import 'package:software_startup/controllers/apicontroller.dart';
 import 'package:software_startup/views/DamageView.dart';
+
 
 void main() {
   const String baseUrl = 'http://10.0.2.2:8080';
   final apiController = ApiController(baseUrl: baseUrl);
+
+  final packagesController = PackagesController(baseUrl: baseUrl, apiController: apiController);
+
+  final packageStatusChecker = PackageStatusChecker(packagesController: packagesController);
+  packageStatusChecker.startChecking();
+
   runApp(MyApp(baseUrl: baseUrl, apiController: apiController));
 }
 
@@ -36,9 +44,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => LoginView(authController: Authcontroller(baseUrl: baseUrl)),
+        '/': (context) => LoginView(authController: AuthController(baseUrl: baseUrl)),
         '/home': (context) => const HomeView(),
-        '/packages-assign': (context) => PackagesAssignView(controller: PackagesAssignController(baseUrl: 'http://10.0.2.2:8080')),
+        '/packages-assign': (context) => PackagesAssignView(controller: PackagesAssignController(baseUrl: baseUrl)),
         '/packages': (context) => PackagesView(controller: PackagesController(baseUrl: baseUrl, apiController: apiController)),
         '/send_packages': (context) => const SendPackagesView(),
         '/send_packages/address': (context) => const SendPackagesAddress(),
@@ -48,9 +56,9 @@ class MyApp extends StatelessWidget {
         '/receiver' : (context) => ReceiverPage(controller: PackagesController(baseUrl: baseUrl, apiController: apiController)),
         '/damage' : (context) {
           final package = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    return DamageView(controller: PackagesController(baseUrl: baseUrl, apiController: apiController), package: package);
+          return DamageView(controller: PackagesController(baseUrl: baseUrl, apiController: apiController), package: package);
+        },
       },
-    },
     );
   }
 }
