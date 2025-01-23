@@ -12,7 +12,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xfffbfbfb),
+      backgroundColor: CustomStyles.backgroundColor,
       body: Center(
         child: Column(
           children: <Widget>[
@@ -33,8 +33,9 @@ class _HomeViewState extends State<HomeView> {
                   children: [
                     // Pas de redirectTo's aan wanneer de pagina's aangemaakt worden
                     CustomStyles.willemRijdtButton(context, "Pakketten volgen", redirectTo: "/receiver"),
-                    CustomStyles.willemRijdtButton(context, "Verstuur pakketje", redirectTo: null),
+                    CustomStyles.willemRijdtButton(context, "Verstuur pakketje", redirectTo: "/send_packages"),
                     CustomStyles.willemRijdtButton(context, "Geschiedenis bekijken", redirectTo: "/packages"),
+                    CustomStyles.willemRijdtButton(context, "Pakket aanmelden", redirectTo: "/packages-assign"),
                   ],
                 ),
               ),
