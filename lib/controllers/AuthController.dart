@@ -2,8 +2,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 
-import 'package:software_startup/models/DeliveryPackageModel.dart';
-
 // Write value
 class AuthController{
   final String baseUrl;
@@ -33,7 +31,7 @@ class AuthController{
     if(response.statusCode == 200){
       var jsonResponse = jsonDecode(response.body);
       await storage.write(key: 'jwt', value: jsonResponse['id_token']);
-          return true;
+        return true;
     }else{
       return false;
     }
