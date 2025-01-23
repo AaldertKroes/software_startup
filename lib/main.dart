@@ -6,13 +6,17 @@ import 'package:software_startup/views/HomeView.dart';
 import 'package:software_startup/views/LoginView.dart';
 import 'package:software_startup/views/PackagesAssignView.dart';
 import 'package:software_startup/views/PackagesView.dart';
+import 'package:software_startup/views/send_package/SendPackagesConfirmView.dart';
+import 'package:software_startup/views/send_package/SendPackagesBoxSizeView.dart';
+import 'package:software_startup/views/send_package/SendPackagesAddressView.dart';
+import 'package:software_startup/views/send_package/SendPackagesRecipientView.dart';
 import 'package:software_startup/views/ReceiverView.dart';
 import 'package:software_startup/controllers/authcontroller.dart';
 import 'package:software_startup/controllers/apicontroller.dart';
 import 'package:software_startup/views/DamageView.dart';
 
 void main() {
-  const String baseUrl = 'http://10.0.0.2:8080';
+  const String baseUrl = 'http://10.0.2.2:8080';
   final apiController = ApiController(baseUrl: baseUrl);
   runApp(MyApp(baseUrl: baseUrl, apiController: apiController));
 }
@@ -36,6 +40,10 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomeView(),
         '/packages-assign': (context) => PackagesAssignView(controller: PackagesAssignController(baseUrl: 'http://10.0.2.2:8080')),
         '/packages': (context) => PackagesView(controller: PackagesController(baseUrl: baseUrl, apiController: apiController)),
+        '/send_packages': (context) => const SendPackagesView(),
+        '/send_packages/address': (context) => const SendPackagesAddress(),
+        '/send_packages/recipient': (context) => const SendPackagesRecipient(),
+        '/send_packages/confirm': (context) => const SendPackagesConfirm(),
         '/contact' : (context) => ContactAndFAQView(),
         '/receiver' : (context) => ReceiverPage(controller: PackagesController(baseUrl: baseUrl, apiController: apiController)),
         '/damage' : (context) {
