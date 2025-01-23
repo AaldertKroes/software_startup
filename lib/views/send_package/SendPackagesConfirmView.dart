@@ -61,7 +61,7 @@ class _SendPackagesConfirmState extends State<SendPackagesConfirm> {
                 const Text("Pakket"),
                 InfoTile(label: "Formaat", value: args["packageSize"]),
                 InfoTile(label: "Gewicht", value: args["packageWeight"]),
-                InfoTile(label: "Kosten", value: "€ ${args["paymentAmount"]}".replaceAll('.', ',')),
+                InfoTile(label: "Kosten", value: "€ ${_sendPackageController.getPriceAsString(args["paymentAmount"])}"),
                 const Divider(),
                 const Text("Ontvanger"),
                 InfoTile(label: "Straat", value: args["recipientStreet"]),

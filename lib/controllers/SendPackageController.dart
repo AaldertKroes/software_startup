@@ -35,6 +35,13 @@ class SendPackageController {
     "packageId": 0,
   };
 
+  String getPriceAsString(int price) {
+    var strPrice = price.toString();
+    String lastTwo = strPrice.substring(strPrice.length - 2);
+    String beforeLastTwo = strPrice.substring(0, strPrice.length - 2);
+    return "$beforeLastTwo.$lastTwo";
+  }
+
   void addPackageSizeAndWeight(String packageSize, int weight) {
     _packageFormData["packageSize"] = packageSize;
     _packageFormData["weight"] = weight;

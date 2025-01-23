@@ -108,7 +108,7 @@ class _SendPackagesRecipientState extends State<SendPackagesRecipient> {
               labelText: 'E-mailadres'),
           validator: (value) {
             final RegExp emailRegex =
-            RegExp(r'^[a-zA-Z0-9]+@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*$');
+            RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
 
             if (value == null || value.isEmpty) {
               return "Vul een e-mailadres in";

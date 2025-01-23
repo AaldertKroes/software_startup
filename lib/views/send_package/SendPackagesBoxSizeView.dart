@@ -14,9 +14,14 @@ enum BoxSizes { Klein, Gemiddeld, Groot }
 
 class _SendPackagesViewState extends State<SendPackagesView> {
   final _packageWeightFormKey = GlobalKey<FormState>();
-
   BoxSizes? selectedBoxSize;
   final _packageWeightController = TextEditingController();
+  final _controller = SendPackageController();
+  final Map<String, int> _prices = {
+    "Klein": 395,
+    "Gemiddeld": 495,
+    "Groot": 1295,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -78,12 +83,6 @@ class _SendPackagesViewState extends State<SendPackagesView> {
     if (_packageWeightFormKey.currentState!.validate()
       && selectedBoxSize != null) {
 
-      Map<String, double> prices = {
-        "Klein": 3.95,
-        "Gemiddeld": 4.95,
-        "Groot": 12.95,
-      };
-
       //Send selected items to the next view.
       Navigator.pushNamed(
         context,
@@ -91,7 +90,7 @@ class _SendPackagesViewState extends State<SendPackagesView> {
         arguments: <String, dynamic>{
           "packageSize": selectedBoxSize.toString().split('.').last,
           "packageWeight": int.parse(_packageWeightController.text),
-          "paymentAmount": prices[selectedBoxSize.toString().split('.').last],
+          "paymentAmount": _prices[selectedBoxSize.toString().split('.').last],
           },
       );
     }
@@ -113,51 +112,51 @@ class _SendPackagesViewState extends State<SendPackagesView> {
           ),
         ),
       ),
-      segments: const <ButtonSegment<BoxSizes>>[
+      segments: <ButtonSegment<BoxSizes>>[
         ButtonSegment<BoxSizes>(
           value: BoxSizes.Klein,
           label: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Klein'),
-              SizedBox(height: 4),
+              const Text('Klein'),
+              const SizedBox(height: 4),
               Text(
-                'Max.\n34 x 28 x 12 cm\n€ 3,95',
-                style: TextStyle(fontSize: 12, color: Colors.grey),
+                'Max.\n34 x 28 x 12 cm\n€ ${_controller.getPriceAsString(_prices[BoxSizes.Klein.toString().split('.').last]!)}',
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],
           ),
-          icon: Icon(Icons.pallet),
+          icon: const Icon(Icons.pallet),
         ),
         ButtonSegment<BoxSizes>(
           value: BoxSizes.Gemiddeld,
           label: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Gemiddeld'),
-              SizedBox(height: 4),
+              const Text('Gemiddeld'),
+              const SizedBox(height: 4),
               Text(
-                'Max.\n100 x 50 x 50 cm\n€ 4,95',
-                style: TextStyle(fontSize: 12, color: Colors.grey),
+                'Max.\n100 x 50 x 50 cm\n€ ${_controller.getPriceAsString(_prices[BoxSizes.Gemiddeld.toString().split('.').last]!)}',
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],
           ),
-          icon: Icon(Icons.pallet),
+          icon: const Icon(Icons.pallet),
         ),
         ButtonSegment<BoxSizes>(
           value: BoxSizes.Groot,
           label: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Groot'),
-              SizedBox(height: 4),
+              const Text('Groot'),
+              const SizedBox(height: 4),
               Text(
-                'Max.\n176 x 78 x 58 cm\n€ 12,95',
-                style: TextStyle(fontSize: 12, color: Colors.grey),
+                'Max.\n176 x 78 x 58 cm\n€ ${_controller.getPriceAsString(_prices[BoxSizes.Groot.toString().split('.').last]!)}',
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],
           ),
-          icon: Icon(Icons.pallet),
+          icon: const Icon(Icons.pallet),
         ),
       ],
       selected: selectedBoxSize != null ? <BoxSizes>{selectedBoxSize!} : <BoxSizes>{},
