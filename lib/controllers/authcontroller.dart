@@ -5,11 +5,11 @@ import 'dart:convert';
 import 'package:software_startup/models/DeliveryPackageModel.dart';
 
 // Write value
-class Authcontroller{
+class AuthController{
   final String baseUrl;
   final storage = const FlutterSecureStorage();
 
-  Authcontroller({required this.baseUrl});
+  AuthController({required this.baseUrl});
 
   Future<bool> login(String username, String password) async{
 

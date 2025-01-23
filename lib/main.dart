@@ -12,11 +12,9 @@ import 'package:software_startup/views/send_package/SendPackagesBoxSizeView.dart
 import 'package:software_startup/views/send_package/SendPackagesAddressView.dart';
 import 'package:software_startup/views/send_package/SendPackagesRecipientView.dart';
 import 'package:software_startup/views/ReceiverView.dart';
-import 'package:software_startup/controllers/authcontroller.dart';
+import 'package:software_startup/controllers/AuthController.dart';
 import 'package:software_startup/controllers/apicontroller.dart';
 import 'package:software_startup/views/DamageView.dart';
-
-import 'package:flutter/material.dart';
 
 
 void main() {

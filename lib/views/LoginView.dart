@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:software_startup/controllers/authcontroller.dart';
+import 'package:software_startup/controllers/AuthController.dart';
 
 class LoginView extends StatelessWidget {
-  final Authcontroller authController;
+  final AuthController authController;
 
   LoginView({Key? key, required this.authController}) : super(key: key);
   final usernameController = TextEditingController();
