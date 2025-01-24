@@ -39,7 +39,7 @@ class SendPackageController {
     var strPrice = price.toString();
     String lastTwo = strPrice.substring(strPrice.length - 2);
     String beforeLastTwo = strPrice.substring(0, strPrice.length - 2);
-    return "$beforeLastTwo.$lastTwo";
+    return "$beforeLastTwo,$lastTwo";
   }
 
   void addPackageSizeAndWeight(String packageSize, int weight) {

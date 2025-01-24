@@ -8,7 +8,7 @@ class SenderPaymentController {
     var strPrice = price.toString();
     String lastTwo = strPrice.substring(strPrice.length - 2);
     String beforeLastTwo = strPrice.substring(0, strPrice.length - 2);
-    return "$beforeLastTwo.$lastTwo";
+    return "$beforeLastTwo,$lastTwo";
   }
 
   Future<bool> payUserPayment(Map<String, dynamic> userPayment) async {

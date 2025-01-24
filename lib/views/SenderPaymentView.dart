@@ -53,7 +53,7 @@ class SenderPaymentView extends StatelessWidget {
                 const Text("Betaaloverzicht"),
                 const Divider(),
                 CustomStyles.infoTile("Te betalen bedrag",
-                    controller.getPriceAsString(args['userPayment']['amount']),
+                    "€ ${controller.getPriceAsString(args['userPayment']['amount'])}",
                 ),
                 const Divider(),
                 ElevatedButton(
