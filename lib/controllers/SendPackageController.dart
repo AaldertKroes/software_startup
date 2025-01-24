@@ -65,8 +65,7 @@ class SendPackageController {
     _senderAddressFormData["country"] = "The Netherlands";
   }
 
-  // When confirming delivery: communicate everything with the backend.
-  Future<bool> submitNewDelivery(Map<String, dynamic> packageData) async {
+  Future<dynamic> submitNewDelivery(Map<String, dynamic> packageData) async {
     addPackageSizeAndWeight(
         packageData['packageSize'],
         packageData['packageWeight'],
@@ -84,7 +83,7 @@ class SendPackageController {
     dynamic senderAddressId = await postRequest(_senderAddressFormData, 'addresses');
 
     if (recipientAddressId == null || senderAddressId == null) {
-      return false;
+      return null;
     }
 
     //Set id's of start & stop locations
@@ -101,16 +100,16 @@ class SendPackageController {
     dynamic packageId = await postRequest(_packageFormData, 'delivery-packages');
 
     if (packageId == null) {
-      return false;
+      return null;
     }
     _userPaymentData["amount"] = packageData["paymentAmount"];
     _userPaymentData["packageId"] = packageId["id"];
 
-    dynamic userPaymentId = await postRequest(_userPaymentData, 'user-payments');
-    if (userPaymentId == null) {
-      return false;
+    dynamic userPayment = await postRequest(_userPaymentData, 'user-payments');
+    if (userPayment == null) {
+      return null;
     } else {
-      return true;
+      return userPayment;
     }
   }
 

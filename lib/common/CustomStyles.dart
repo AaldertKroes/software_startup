@@ -77,4 +77,20 @@ class CustomStyles {
       ),
     );
   }
+
+  static Container infoTile(String label, dynamic value) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text("$value"),
+        ],
+      ),
+    );
+  }
 }

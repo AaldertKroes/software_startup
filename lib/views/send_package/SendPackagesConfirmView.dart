@@ -15,28 +15,30 @@ class _SendPackagesConfirmState extends State<SendPackagesConfirm> {
   Future<void> sendPackage() async {
     final Map<String, dynamic> args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
 
-    bool response = await _sendPackageController.submitNewDelivery(args);
+    dynamic response = await _sendPackageController.submitNewDelivery(args);
 
-    if (response == false) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text(
-              'Bevestiging mislukt: '
-                  'probeer het op een ander moment weer'
-          ),
-          )
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text(
-              'Bevestiging geslaagd!'
-          ),
-          )
-      );
-    }
     if (mounted) {
+      if (response != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text(
+                'Bevestiging geslaagd!'
+            ),
+            )
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text(
+                'Bevestiging mislukt: probeer het op een ander moment weer'
+            ),
+            )
+        );
+      }
       Navigator.pushNamed(
         context,
-        '/home',
+        '/sender-payment',
+        arguments: <String, dynamic> {
+          "userPayment": response,
+        }
       );
     }
   }
@@ -59,22 +61,22 @@ class _SendPackagesConfirmState extends State<SendPackagesConfirm> {
               children: [
                 const Divider(),
                 const Text("Pakket"),
-                InfoTile(label: "Formaat", value: args["packageSize"]),
-                InfoTile(label: "Gewicht", value: args["packageWeight"]),
-                InfoTile(label: "Kosten", value: "€ ${_sendPackageController.getPriceAsString(args["paymentAmount"])}"),
+                CustomStyles.infoTile("Formaat", args["packageSize"]),
+                CustomStyles.infoTile("Gewicht", args["packageWeight"]),
+                CustomStyles.infoTile("Kosten", "€ ${_sendPackageController.getPriceAsString(args["paymentAmount"])}"),
                 const Divider(),
                 const Text("Ontvanger"),
-                InfoTile(label: "Straat", value: args["recipientStreet"]),
-                InfoTile(label: "Stad", value: args["recipientCity"]),
-                InfoTile(label: "Postcode", value: args["recipientPostalCode"]),
-                InfoTile(label: "Naam", value: args["recipientFirstName"]),
-                InfoTile(label: "Achternaam", value: args["recipientLastName"]),
-                InfoTile(label: "Emailadres", value: args["recipientEmail"]),
+                CustomStyles.infoTile("Straat", args["recipientStreet"]),
+                CustomStyles.infoTile("Stad", args["recipientCity"]),
+                CustomStyles.infoTile("Postcode", args["recipientPostalCode"]),
+                CustomStyles.infoTile("Naam", args["recipientFirstName"]),
+                CustomStyles.infoTile("Achternaam", args["recipientLastName"]),
+                CustomStyles.infoTile("Emailadres", args["recipientEmail"]),
                 const Divider(),
                 const Text("Verstuurder"),
-                InfoTile(label: "Sender Street", value: args["senderStreet"]),
-                InfoTile(label: "Sender City", value: args["senderCity"]),
-                InfoTile(label: "Sender Postal Code", value: args["senderPostalCode"]),
+                CustomStyles.infoTile("Sender Street", args["senderStreet"]),
+                CustomStyles.infoTile("Sender City", args["senderCity"]),
+                CustomStyles.infoTile("Sender Postal Code", args["senderPostalCode"]),
                 const Divider(),
                 ],
             )
@@ -106,29 +108,5 @@ class _SendPackagesConfirmState extends State<SendPackagesConfirm> {
         ],
         ),
       );
-  }
-}
-
-class InfoTile extends StatelessWidget {
-  final String label;
-  final dynamic value;
-
-  const InfoTile({super.key, required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          Text("$value"),
-        ],
-      ),
-    );
   }
 }
