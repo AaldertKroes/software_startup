@@ -5,7 +5,7 @@ import 'package:software_startup/controllers/packagescontroller.dart';
 class ReceiverPage extends StatefulWidget {
   final PackagesController controller;
 
-  const ReceiverPage({Key? key, required this.controller}) : super(key: key);
+  const ReceiverPage({super.key, required this.controller});
 
   @override
   _ReceiverPageState createState() => _ReceiverPageState();
@@ -13,10 +13,12 @@ class ReceiverPage extends StatefulWidget {
 
 class _ReceiverPageState extends State<ReceiverPage> {
   late Future<List<dynamic>> underwayPackages;
+  late PackagesController controller;
 
   @override
   void initState() {
     super.initState();
+    controller = widget.controller;
     underwayPackages = widget.controller.underwayPackages();
   }
 
@@ -64,7 +66,7 @@ class _ReceiverPageState extends State<ReceiverPage> {
     );
   }
 
-  void _showReturnPackageConfirmDialog(BuildContext context) {
+  void _showReturnPackageConfirmDialog(BuildContext context, package) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -80,6 +82,7 @@ class _ReceiverPageState extends State<ReceiverPage> {
             ),
             ElevatedButton(
               onPressed: () {
+                controller.createReturnPackageV2(package);
                 Navigator.of(context).pop();
               },
               child: const Text(
@@ -105,7 +108,7 @@ class _ReceiverPageState extends State<ReceiverPage> {
           icon: const Icon(Icons.delete),
           onPressed: () {
             // Add your button action here
-            _showReturnPackageConfirmDialog(context);
+            _showReturnPackageConfirmDialog(context, package);
           },
         ),
       ),

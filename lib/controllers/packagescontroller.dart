@@ -84,8 +84,13 @@ class PackagesController {
     return await apiController.PostData('api/delivery-packages', package);
   }
 
-  Future<bool> cancelPackage(DeliveryPackageModel package) async {
+  Future<bool> createReturnPackageV2(Map<String, dynamic> package) async {
+    // Change the delivery to be NOT_STARTED, flip destination and origin addresses. Put these changes to backend
+    package['status'] = 'NOT_STARTED';
+    var newStartLocation = package['endLocationId'];
+    package['endLocationId'] = package['startLocationId'];
+    package['startLocationId'] = newStartLocation;
 
-    return false;
+    return await apiController.putData('api/delivery-packages/${package['id']}', package);
   }
 }
