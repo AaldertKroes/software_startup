@@ -11,6 +11,7 @@ class DeliveryPackageModel {
   int senderId;
   int receiverId;
   int? deliveryDriverId;
+  double? shippingPrice;
 
   DeliveryPackageModel({
     this.id,
@@ -25,6 +26,7 @@ class DeliveryPackageModel {
     required this.senderId,
     required this.receiverId,
     this.deliveryDriverId,
+    this.shippingPrice,
   });
 
   factory DeliveryPackageModel.fromJson(Map<String, dynamic> json) => DeliveryPackageModel(

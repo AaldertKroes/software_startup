@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as http;
+import 'package:software_startup/common/CustomStyles.dart';
 import 'package:software_startup/controllers/packagescontroller.dart';
+import 'package:software_startup/models/DeliveryPackageModel.dart';
 
 class PackagesView extends StatefulWidget {
   final PackagesController controller;
@@ -14,13 +13,8 @@ class PackagesView extends StatefulWidget {
 }
 
 class _PackagesViewState extends State<PackagesView> {
-  late Future<List<dynamic>> deliveredPackages;
-
   @override
-  void initState() {
-    super.initState();
-    deliveredPackages = widget.controller.deliveredPackages();
-  }
+  void initState() => super.initState();
 
  @override
   Widget build(BuildContext context) {
@@ -28,8 +22,8 @@ class _PackagesViewState extends State<PackagesView> {
       appBar: AppBar(
         title: const Text('Pakketten'),
       ),
-      body: FutureBuilder<List<dynamic>>(
-        future: deliveredPackages,
+      body: FutureBuilder<List<DeliveryPackageModel>>(
+        future: widget.controller.deliveredPackages(),
         builder: (BuildContext context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -46,34 +40,7 @@ class _PackagesViewState extends State<PackagesView> {
               itemCount: snapshot.data!.length,
               itemBuilder: (BuildContext context, int index) {
                 var package = snapshot.data![index];
-                return Card(
-                  margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                  elevation: 4,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Pakket ID: ${package['id']}',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16)),
-                        const SizedBox(height: 8),
-                        Text('Status: ${package['status']}'),
-                        Text('Gewicht: ${package['weight']} kg'),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              '/damage',
-                              arguments: package,
-                            );
-                          },
-                          child: const Text('Schade melden'),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+                return CustomStyles.deliveredPackagesCard(context, package);
               },
             );
           }

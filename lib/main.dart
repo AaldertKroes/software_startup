@@ -21,7 +21,7 @@ void main() {
   const String baseUrl = 'http://10.0.2.2:8080';
   final apiController = ApiController(baseUrl: baseUrl);
 
-  final packagesController = PackagesController(baseUrl: baseUrl, apiController: apiController);
+  final packagesController = PackagesController(apiController: apiController);
 
   final packageStatusChecker = PackageStatusChecker(packagesController: packagesController);
   packageStatusChecker.startChecking();
@@ -46,17 +46,17 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LoginView(authController: AuthController(baseUrl: baseUrl)),
         '/home': (context) => const HomeView(),
-        '/packages-assign': (context) => PackagesAssignView(controller: PackagesAssignController(baseUrl: baseUrl)),
-        '/packages': (context) => PackagesView(controller: PackagesController(baseUrl: baseUrl, apiController: apiController)),
+        '/packages-assign': (context) => PackagesAssignView(controller: PackagesAssignController(apiController: apiController)),
+        '/packages': (context) => PackagesView(controller: PackagesController(apiController: apiController)),
         '/send_packages': (context) => const SendPackagesView(),
         '/send_packages/address': (context) => const SendPackagesAddress(),
         '/send_packages/recipient': (context) => const SendPackagesRecipient(),
         '/send_packages/confirm': (context) => const SendPackagesConfirm(),
         '/contact' : (context) => ContactAndFAQView(),
-        '/receiver' : (context) => ReceiverPage(controller: PackagesController(baseUrl: baseUrl, apiController: apiController)),
+        '/receiver' : (context) => ReceiverPage(controller: PackagesController(apiController: apiController)),
         '/damage' : (context) {
           final package = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-          return DamageView(controller: PackagesController(baseUrl: baseUrl, apiController: apiController), package: package);
+          return DamageView(controller: PackagesController(apiController: apiController), package: package);
         },
       },
     );

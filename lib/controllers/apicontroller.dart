@@ -7,7 +7,8 @@ class ApiController {
   final storage = const FlutterSecureStorage();
   ApiController({required this.baseUrl});
 
-  Future<List<dynamic>> GetData(extension) async{
+  // Method to retrieve data in a list
+  Future<List<dynamic>> getData(String extension) async {
     String? token = await storage.read(key: 'jwt');
     var response = await http.get(
       Uri.parse('$baseUrl/$extension'),
@@ -17,14 +18,33 @@ class ApiController {
         'Authorization': 'Bearer $token',
       },
     );
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       return jsonDecode(response.body);
-    }else{
+    } else {
       throw Exception('Failed to load data: $response');
     }
   }
 
-  Future<bool> PostData(extension, data) async{
+  // Method to retrieve data as a single map
+  Future<dynamic> getRecord(String extension) async {
+    String? token = await storage.read(key: 'jwt');
+    var response = await http.get(
+      Uri.parse('$baseUrl/$extension'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to load data: $response');
+    }
+  }
+
+  // Method to post data with a body
+  Future<bool> postData(String extension, Object data) async {
     String? token = await storage.read(key: 'jwt');
     var response = await http.post(
       Uri.parse('$baseUrl/$extension'),
@@ -35,10 +55,6 @@ class ApiController {
       },
       body: json.encode(data),
     );
-    if(response.statusCode == 200 || response.statusCode == 201){
-      return true;
-    }else{
-      return false;
-    }
+    return response.statusCode == 200 || response.statusCode == 201;
   }
 }

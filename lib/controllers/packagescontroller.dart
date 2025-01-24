@@ -1,74 +1,57 @@
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:software_startup/controllers/apicontroller.dart';
+import 'package:software_startup/models/AddressModel.dart';
+import 'package:software_startup/models/DeliveryPackageModel.dart';
 
 class PackagesController {
   final ApiController apiController;
-  final String baseUrl;
   final storage = const FlutterSecureStorage();
 
-  PackagesController({required this.baseUrl, required this.apiController});
+  PackagesController({required this.apiController});
 
-  Future<List<dynamic>> fetchPackages() async {
-    String? token = await storage.read(key: 'jwt');
-    if (token == null) {
-      throw Exception("JWT token niet gevonden. Log eerst in.");
+  Future<List<DeliveryPackageModel>> fetchPackages() async {
+    var response = await apiController.getData("api/delivery-packages");
+    List<DeliveryPackageModel> packages = [];
+    for (Map<String, dynamic> jsonPackage in response) {
+      DeliveryPackageModel curPackage = DeliveryPackageModel.fromJson(jsonPackage);
+      packages.add(curPackage);
     }
-
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
-    var response = await http.get(
-      Uri.parse('$baseUrl/api/delivery-packages'),
-      headers: headers,
-    );
-
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      throw Exception("Kan pakketten niet ophalen: ${response.statusCode}");
-    }
+    return packages;
   }
 
-  Future<List<dynamic>> deliveredPackages() async {
-    List allPackages = await fetchPackages();
-    List delivered = [];
+  Future<String> getLocationString(int id) async {
+    var response = await apiController.getRecord('api/addresses/$id');
+    AddressModel curAddress = AddressModel.fromJson(response);
+    return "${curAddress.street} ${curAddress.postalCode}, ${curAddress.city}, ${curAddress.country}";
+  }
 
-    for (var i in allPackages) {
-      if (i['status'] == 'DELIVERED') {
-        delivered.add(i);
-      }
+  Future<List<DeliveryPackageModel>> deliveredPackages() async {
+    List<DeliveryPackageModel> allPackages = await fetchPackages();
+    List<DeliveryPackageModel> delivered = [];
+
+    for (var currentPackage in allPackages) {
+      if (currentPackage.status == 'DELIVERED') delivered.add(currentPackage);
     }
-
     return delivered;
   }
 
-  Future<List<dynamic>> notStartedPackages() async {
-    List allPackages = await fetchPackages();
-    List notStarted = [];
+  Future<List<DeliveryPackageModel>> notStartedPackages() async {
+    List<DeliveryPackageModel> allPackages = await fetchPackages();
+    List<DeliveryPackageModel> notStarted = [];
 
-    for (var i in allPackages) {
-      if (i['status'] == 'NOT_STARTED') {
-        notStarted.add(i);
-      }
+    for (var currentPackage in allPackages) {
+      if (currentPackage.status == 'NOT_STARTED') notStarted.add(currentPackage);
     }
-
     return notStarted;
   }
 
-  Future<List<dynamic>> underwayPackages() async {
-    List allPackages = await fetchPackages();
-    List underway = [];
+  Future<List<DeliveryPackageModel>> underwayPackages() async {
+    List<DeliveryPackageModel> allPackages = await fetchPackages();
+    List<DeliveryPackageModel> underway = [];
 
-    for (var i in allPackages) {
-      if (i['status'] == 'UNDERWAY') {
-        underway.add(i);
-      }
+    for (var currentPackage in allPackages) {
+      if (currentPackage.status == 'UNDERWAY') underway.add(currentPackage);
     }
-
     return underway;
   }
 
@@ -80,6 +63,6 @@ class PackagesController {
     package['destinationAddress'] = package['originAddress'];
     package.remove('id');
 
-    return await apiController.PostData('api/delivery-packages', package);
+    return await apiController.postData('api/delivery-packages', package);
   }
 }
