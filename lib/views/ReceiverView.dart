@@ -12,14 +12,12 @@ class ReceiverPage extends StatefulWidget {
 }
 
 class _ReceiverPageState extends State<ReceiverPage> {
-  late Future<List<dynamic>> underwayPackages;
   late PackagesController controller;
 
   @override
   void initState() {
     super.initState();
     controller = widget.controller;
-    underwayPackages = widget.controller.underwayPackages();
   }
 
   String calculateETA(int distance) {
@@ -40,7 +38,7 @@ class _ReceiverPageState extends State<ReceiverPage> {
         title: const Text('Pakketjes in Bezorging'),
       ),
       body: FutureBuilder<List<dynamic>>(
-        future: underwayPackages,
+        future: widget.controller.underwayPackages(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -57,7 +55,7 @@ class _ReceiverPageState extends State<ReceiverPage> {
               itemBuilder: (context, index) {
                 var package = packages[index];
                 var eta = calculateETA(package['distance']);
-                return underWayPackageCard(package, eta);
+                return underWayPackageCard(context, package, eta);
               },
             );
           }
@@ -66,8 +64,8 @@ class _ReceiverPageState extends State<ReceiverPage> {
     );
   }
 
-  void _showReturnPackageConfirmDialog(BuildContext context, package) {
-    showDialog(
+  void _showReturnPackageConfirmDialog(BuildContext context, package) async {
+    await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -76,7 +74,7 @@ class _ReceiverPageState extends State<ReceiverPage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop();
               },
               child: const Text('Annuleren'),
             ),
@@ -96,9 +94,11 @@ class _ReceiverPageState extends State<ReceiverPage> {
         );
       },
     );
+    //Refresh page after alertDialog
+    setState(() {});
   }
 
-  Widget underWayPackageCard(package, String eta) {
+  Widget underWayPackageCard(context, package, String eta) {
     return Card(
       child: ListTile(
         title: Text('Pakket ID: ${package['id']}'),
@@ -107,7 +107,6 @@ class _ReceiverPageState extends State<ReceiverPage> {
         trailing: IconButton(
           icon: const Icon(Icons.delete),
           onPressed: () {
-            // Add your button action here
             _showReturnPackageConfirmDialog(context, package);
           },
         ),
