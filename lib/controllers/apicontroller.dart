@@ -53,10 +53,6 @@ class ApiController {
       },
       body: json.encode(data),
     );
-    if(response.statusCode == 200 || response.statusCode == 204){
-      return true;
-    }else{
-      return false;
-    }
+    return response.statusCode == 200 || response.statusCode == 204;
   }
 }
