@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:software_startup/common/CustomStyles.dart';
 import 'package:software_startup/controllers/packagescontroller.dart';
 
 class ReceiverPage extends StatefulWidget {
@@ -55,7 +56,7 @@ class _ReceiverPageState extends State<ReceiverPage> {
               itemBuilder: (context, index) {
                 var package = packages[index];
                 var eta = calculateETA(package['distance']);
-                return underWayPackageCard(context, package, eta);
+                return CustomStyles.underWayPackageCard(context, package, eta, _showReturnPackageConfirmDialog) ;
               },
             );
           }
@@ -96,22 +97,6 @@ class _ReceiverPageState extends State<ReceiverPage> {
     );
     //Refresh page after alertDialog
     setState(() {});
-  }
-
-  Widget underWayPackageCard(context, package, String eta) {
-    return Card(
-      child: ListTile(
-        title: Text('Pakket ID: ${package['id']}'),
-        subtitle: Text(
-            'Afstand: ${package['distance']} km\nETA: $eta uur\nGewicht: ${package['weight']} kg'),
-        trailing: IconButton(
-          icon: const Icon(Icons.delete),
-          onPressed: () {
-            _showReturnPackageConfirmDialog(context, package);
-          },
-        ),
-      ),
-    );
   }
 }
 

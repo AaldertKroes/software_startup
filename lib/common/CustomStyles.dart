@@ -61,4 +61,20 @@ class CustomStyles {
       ),
     );
   }
+
+  static Card underWayPackageCard(context, package, String eta, callback) {
+    return Card(
+      child: ListTile(
+        title: Text('Pakket ID: ${package['id']}'),
+        subtitle: Text(
+            'Afstand: ${package['distance']} km\nETA: $eta uur\nGewicht: ${package['weight']} kg'),
+        trailing: IconButton(
+          icon: const Icon(Icons.delete),
+          onPressed: () {
+            callback(context, package);
+          },
+        ),
+      ),
+    );
+  }
 }
