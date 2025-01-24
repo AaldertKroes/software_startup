@@ -48,23 +48,66 @@ class _ReceiverPageState extends State<ReceiverPage> {
             );
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('Geen pakketjes in bezorging.'));
+          } else {
+            var packages = snapshot.data!;
+            return ListView.builder(
+              itemCount: packages.length,
+              itemBuilder: (context, index) {
+                var package = packages[index];
+                var eta = calculateETA(package['distance']);
+                return underWayPackageCard(package, eta);
+              },
+            );
           }
-
-          var packages = snapshot.data!;
-          return ListView.builder(
-            itemCount: packages.length,
-            itemBuilder: (context, index) {
-              var package = packages[index];
-              var eta = calculateETA(package['distance']);
-              return Card(
-                child: ListTile(
-                  title: Text('Pakket ID: ${package['id']}'),
-                  subtitle: Text('Afstand: ${package['distance']} km\nETA: $eta uur\nGewicht: ${package['weight']} kg'),
-                ),
-              );
-            },
-          );
         },
+      ),
+    );
+  }
+
+  void _showReturnPackageConfirmDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Verzeding terugsturen'),
+          content: const Text('Weet je zeker dat je de verzending wilt terugsturen?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('Annuleren'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                'terugsturen',
+                style: TextStyle(
+                  color: Colors.red,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget underWayPackageCard(package, String eta) {
+    return Card(
+      child: ListTile(
+        title: Text('Pakket ID: ${package['id']}'),
+        subtitle: Text(
+            'Afstand: ${package['distance']} km\nETA: $eta uur\nGewicht: ${package['weight']} kg'),
+        trailing: IconButton(
+          icon: const Icon(Icons.delete),
+          onPressed: () {
+            // Add your button action here
+            _showReturnPackageConfirmDialog(context);
+          },
+        ),
       ),
     );
   }

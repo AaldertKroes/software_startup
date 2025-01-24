@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:software_startup/controllers/apicontroller.dart';
+import 'package:software_startup/models/DeliveryPackageModel.dart';
 
 class PackagesController {
   final ApiController apiController;
@@ -81,5 +82,10 @@ class PackagesController {
     package.remove('id');
 
     return await apiController.PostData('api/delivery-packages', package);
+  }
+
+  Future<bool> cancelPackage(DeliveryPackageModel package) async {
+
+    return false;
   }
 }
