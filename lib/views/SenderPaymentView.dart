@@ -14,7 +14,7 @@ class SenderPaymentView extends StatelessWidget {
       if (response) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text(
-              'Betaaling voltooid!'
+              'Betaling voltooid!'
           ),
           )
         );
