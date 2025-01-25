@@ -1,7 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:software_startup/controllers/apicontroller.dart';
 
 class PackagesController {
@@ -72,7 +71,6 @@ class PackagesController {
   }
 
   Future<bool> createReturnPackage(Map<String, dynamic> package) async {
-
     package['status'] = 'NOT_STARTED';
     package['originAddress'] = package['destinationAddress'];
     package['destinationAddress'] = package['originAddress'];
@@ -81,13 +79,14 @@ class PackagesController {
     return await apiController.PostData('api/delivery-packages', package);
   }
 
-  Future<List> getAddress() async {
-    final underwaypackages = await underwayPackages();
-    List address = [];
-    for (var i in underwaypackages) {
-      address.add(await apiController.GetData('api/addresses/${i['id']}'));
+  Future LocationAddress(int locationId) async {
+    var startLocation = await apiController.GetData('/api/addresses/$locationId');
+    if (startLocation is List && startLocation.isNotEmpty) {
+      return startLocation[0];
+    } else if (startLocation is Map) {
+      return startLocation;
+    } else {
+      throw Exception('Invalid data format received from API');
     }
-    print(address);
-    return address;
   }
 }
