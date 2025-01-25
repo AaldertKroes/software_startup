@@ -11,7 +11,6 @@ class DeliveryPackageModel {
   int senderId;
   int receiverId;
   int? deliveryDriverId;
-  int? shippingPrice;
 
   DeliveryPackageModel({
     this.id,
@@ -26,7 +25,6 @@ class DeliveryPackageModel {
     required this.senderId,
     required this.receiverId,
     this.deliveryDriverId,
-    this.shippingPrice,
   });
 
   factory DeliveryPackageModel.fromJson(Map<String, dynamic> json) =>
@@ -41,7 +39,6 @@ class DeliveryPackageModel {
         senderId: (json['senderId'] as num).toInt(),
         receiverId: (json['receiverId'] as num).toInt(),
         deliveryDriverId: (json['deliveryDriverId'] as num?)?.toInt(),
-        shippingPrice: (json['shippingPrice'] as num?)?.toInt(),
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -55,6 +52,5 @@ class DeliveryPackageModel {
         'senderId': senderId,
         'receiverId': receiverId,
         'deliveryDriverId': deliveryDriverId,
-        'shippingPrice': shippingPrice
       };
 }
