@@ -20,7 +20,7 @@ import 'package:software_startup/controllers/SenderPaymentController.dart';
 
 
 void main() {
-  const String baseUrl = 'http://10.0.0.2:8080';
+  const String baseUrl = 'https://3b85-145-33-102-21.ngrok-free.app';
   final apiController = ApiController(baseUrl: baseUrl);
 
   final packagesController = PackagesController(baseUrl: baseUrl, apiController: apiController);
@@ -57,6 +57,7 @@ class MyApp extends StatelessWidget {
         '/sender-payment': (context) => SenderPaymentView(controller: SenderPaymentController(apiController: apiController)),
         '/contact' : (context) => ContactAndFAQView(),
         '/receiver' : (context) => ReceiverPage(controller: PackagesController(baseUrl: baseUrl, apiController: apiController)),
+        '/mapview' : (context) => MapView(packagesController: PackagesController(baseUrl: baseUrl, apiController: apiController)),
         '/damage' : (context) {
           final package = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
           return DamageView(controller: PackagesController(baseUrl: baseUrl, apiController: apiController), package: package);

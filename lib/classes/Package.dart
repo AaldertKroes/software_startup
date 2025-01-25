@@ -10,6 +10,9 @@ class Package {
   late String destinationAddress;
   late Status status;
 
+  double? latitude;
+  double? longitude;
+
   Package(this.id, this.name, this.description, this.packagePrice, this.weight);
 }
 
