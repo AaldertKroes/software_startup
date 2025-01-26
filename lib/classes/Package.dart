@@ -12,6 +12,8 @@ class Package {
 
   double? latitude;
   double? longitude;
+  double? destinationLatitude;
+  double? destinationLongitude;
 
   Package(this.id, this.name, this.description, this.packagePrice, this.weight);
 }

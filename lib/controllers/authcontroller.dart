@@ -22,14 +22,15 @@ class Authcontroller{
     };
 
     var response = await http.post(
-      Uri.parse('$baseUrl/authenticate'),
+      Uri.parse('$baseUrl/api/authenticate'),
       body: loginPayload,
       headers: loginHeaders,
     );
-    // testing a stupid comment because github is being stupid
+
     if(response.statusCode == 200){
       var jsonResponse = jsonDecode(response.body);
       await storage.write(key: 'jwt', value: jsonResponse['id_token']);
+    //TODO: Retrofit gebruiken en speciale klasse voor JWT token aanmaken
       return true;
     }else{
       return false;
