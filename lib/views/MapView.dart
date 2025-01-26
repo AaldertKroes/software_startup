@@ -110,7 +110,7 @@ class _MapViewState extends State<MapView> {
                         },
                         child: Column(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.location_on,
                               color: Colors.red,
                               size: 48,
@@ -122,29 +122,41 @@ class _MapViewState extends State<MapView> {
                     );
                   }).toList();
 
-                  return Column(
-                    children: [
-                      Container(
-                        height: 280,
-                        child: FlutterMap(
-                          options: MapOptions(
-                            center: LatLng(53.206, 6.587),
-                            zoom: 10.0,
-                            maxZoom: 18.0,
-                            minZoom: 5.0,
-                          ),
-                          children: [
-                            TileLayer(
-                              urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                              subdomains: ['a', 'b', 'c'],
+                  List<Polyline> polylines = filteredPackages.map((package) {
+                    return Polyline(
+                      points: [
+                        LatLng(package['latitude'], package['longitude']),
+                        LatLng(package['destinationLatitude'], package['destinationLongitude']),
+                      ],
+                      strokeWidth: 4.0,
+                      color: Colors.blue,
+                    );
+                  }).toList();
+
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 300,
+                          child: FlutterMap(
+                            options: MapOptions(
+                              center: LatLng(53.206, 6.587),
+                              zoom: 10.0,
+                              maxZoom: 18.0,
+                              minZoom: 5.0,
                             ),
-                            MarkerLayer(markers: markers),
-                          ],
+                            children: [
+                              TileLayer(
+                                urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                subdomains: ['a', 'b', 'c'],
+                              ),
+                              MarkerLayer(markers: markers),
+                              PolylineLayer(polylines: polylines),
+                            ],
+                          ),
                         ),
-                      ),
-                      if (selectedPackage != null)
-                        Expanded(
-                          child: Card(
+                        if (selectedPackage != null)
+                          Card(
                             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                             elevation: 4,
                             child: Padding(
@@ -161,11 +173,11 @@ class _MapViewState extends State<MapView> {
                                 ],
                               ),
                             ),
-                          ),
-                        )
-                      else
-                        Expanded(
-                          child: ListView.builder(
+                          )
+                        else
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
                             itemCount: filteredPackages.length,
                             itemBuilder: (BuildContext context, int index) {
                               var package = filteredPackages[index];
@@ -199,8 +211,8 @@ class _MapViewState extends State<MapView> {
                               );
                             },
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   );
                 }
               },
@@ -215,9 +227,14 @@ class _MapViewState extends State<MapView> {
     List<dynamic> packages = await widget.packagesController.notStartedPackages();
     for (var package in packages) {
       var startLocationJson = await widget.packagesController.apiController.GetData('api/addresses/${package['startLocationId']}');
-      LatLng coordinates = await widget.geocoding.getLatLngFromAddress(jsonEncode(startLocationJson));
-      package['latitude'] = coordinates.latitude;
-      package['longitude'] = coordinates.longitude;
+      LatLng startCoordinates = await widget.geocoding.getLatLngFromAddress(jsonEncode(startLocationJson));
+      package['latitude'] = startCoordinates.latitude;
+      package['longitude'] = startCoordinates.longitude;
+
+      var endLocationJson = await widget.packagesController.apiController.GetData('api/addresses/${package['endLocationId']}');
+      LatLng endCoordinates = await widget.geocoding.getLatLngFromAddress(jsonEncode(endLocationJson));
+      package['destinationLatitude'] = endCoordinates.latitude;
+      package['destinationLongitude'] = endCoordinates.longitude;
     }
     return packages;
   }
