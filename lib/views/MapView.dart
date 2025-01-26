@@ -198,27 +198,27 @@ class _MapViewState extends State<MapView> {
     List<DeliveryPackageModel> packages = await widget.packagesController
         .notStartedPackages();
     for (var package in packages) {
-      var startLocationJson = await widget.packagesController.apiController
-          .GetData('api/addresses/${package.startLocationId}');
-      package.startLocation = (startLocationJson['street'] ?? '') + ' ' +
-          (startLocationJson['houseNumber'] ?? '') + ', ' +
-          (startLocationJson['postalCode'] ?? '') + ' ' +
-          (startLocationJson['city'] ?? '');
-      LatLng startCoordinates = await widget.geocoding.getLatLngFromAddress(
-          jsonEncode(startLocationJson));
-      package.latitude = startCoordinates.latitude;
-      package.longitude = startCoordinates.longitude;
+        var startLocationJson = await widget.packagesController.apiController
+            .GetData('api/addresses/${package.startLocationId}');
+        package.startLocation = (startLocationJson['street'] ?? '') + ' ' +
+            (startLocationJson['houseNumber'] ?? '') + ', ' +
+            (startLocationJson['postalCode'] ?? '') + ' ' +
+            (startLocationJson['city'] ?? '');
+        LatLng startCoordinates = await widget.geocoding.getLatLngFromAddress(
+            jsonEncode(startLocationJson));
+        package.latitude = startCoordinates.latitude;
+        package.longitude = startCoordinates.longitude;
 
-      var endLocationJson = await widget.packagesController.apiController
-          .GetData('api/addresses/${package.endLocationId}');
-      package.endLocation = (endLocationJson['street'] ?? '') + ' ' +
-          (endLocationJson['houseNumber'] ?? '') + ', ' +
-          (endLocationJson['postalCode'] ?? '') + ' ' +
-          (endLocationJson['city'] ?? '');
-      LatLng endCoordinates = await widget.geocoding.getLatLngFromAddress(
-          jsonEncode(endLocationJson));
-      package.destinationLatitude = endCoordinates.latitude;
-      package.destinationLongitude = endCoordinates.longitude;
+        var endLocationJson = await widget.packagesController.apiController
+            .GetData('api/addresses/${package.endLocationId}');
+        package.endLocation = (endLocationJson['street'] ?? '') + ' ' +
+            (endLocationJson['houseNumber'] ?? '') + ', ' +
+            (endLocationJson['postalCode'] ?? '') + ' ' +
+            (endLocationJson['city'] ?? '');
+        LatLng endCoordinates = await widget.geocoding.getLatLngFromAddress(
+            jsonEncode(endLocationJson));
+        package.destinationLatitude = endCoordinates.latitude;
+        package.destinationLongitude = endCoordinates.longitude;
     }
     return packages;
   }
