@@ -13,14 +13,15 @@ import 'package:software_startup/views/send_package/SendPackagesBoxSizeView.dart
 import 'package:software_startup/views/send_package/SendPackagesAddressView.dart';
 import 'package:software_startup/views/send_package/SendPackagesRecipientView.dart';
 import 'package:software_startup/views/ReceiverView.dart';
-import 'package:software_startup/controllers/AuthController.dart';
+import 'package:software_startup/views/MapView.dart';
 import 'package:software_startup/controllers/apicontroller.dart';
 import 'package:software_startup/views/DamageView.dart';
 import 'package:software_startup/controllers/SenderPaymentController.dart';
+import 'controllers/AuthController.dart';
 
 
 void main() {
-  const String baseUrl = 'https://3b85-145-33-102-21.ngrok-free.app';
+  const String baseUrl = 'http://192.168.2.9:8080';
   final apiController = ApiController(baseUrl: baseUrl);
 
   final packagesController = PackagesController(baseUrl: baseUrl, apiController: apiController);

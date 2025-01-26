@@ -25,7 +25,7 @@ class CustomStyles {
     fontSize: 16,
   );
 
-  static Card packagesAssignCard(BuildContext context, PackagesAssignController controller, DeliveryPackageModel package) {
+  static Card packagesAssignCard(BuildContext context, PackagesAssignController controller, dynamic package) {
     return Card(
       elevation: 4,
       color: const Color(0xfffbfbfb),

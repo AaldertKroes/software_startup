@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:software_startup/controllers/packagescontroller.dart';
+import 'package:software_startup/models/DeliveryPackageModel.dart';
 import '../services/geocoding.dart';
 
 class MapView extends StatefulWidget {
@@ -51,8 +52,8 @@ class _MapViewState extends State<MapView> {
         double packageDistance = _calculateDistance(
           fixedCoordinate.latitude,
           fixedCoordinate.longitude,
-          package['latitude'],
-          package['longitude'],
+          package.latitude,
+          package.longitude,
         );
         return packageDistance <= distance;
       }).toList();
@@ -87,9 +88,9 @@ class _MapViewState extends State<MapView> {
             ),
           ),
           Expanded(
-            child: FutureBuilder<List<dynamic>>(
+            child: FutureBuilder<List<DeliveryPackageModel>>(
               future: _getPackagesWithCoordinates(),
-              builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+              builder: (BuildContext context, AsyncSnapshot<List<DeliveryPackageModel>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
@@ -101,7 +102,7 @@ class _MapViewState extends State<MapView> {
                     return Marker(
                       width: 80.0,
                       height: 80.0,
-                      point: LatLng(package['latitude'], package['longitude']),
+                      point: LatLng(package.latitude, package.longitude),
                       builder: (ctx) => GestureDetector(
                         onTap: () {
                           setState(() {
@@ -115,7 +116,7 @@ class _MapViewState extends State<MapView> {
                               color: Colors.red,
                               size: 48,
                             ),
-                            Text('ID: ${package['id']}'),
+                            Text('ID: ${package.id}'),
                           ],
                         ),
                       ),
@@ -125,8 +126,8 @@ class _MapViewState extends State<MapView> {
                   List<Polyline> polylines = filteredPackages.map((package) {
                     return Polyline(
                       points: [
-                        LatLng(package['latitude'], package['longitude']),
-                        LatLng(package['destinationLatitude'], package['destinationLongitude']),
+                        LatLng(package.latitude, package.longitude),
+                        LatLng(package.destinationLatitude, package.destinationLongitude),
                       ],
                       strokeWidth: 4.0,
                       color: Colors.blue,
@@ -189,12 +190,12 @@ class _MapViewState extends State<MapView> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text('Pakket ID: ${package['id']}',
+                                      Text('Pakket ID: ${package.id}',
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold, fontSize: 16)),
                                       const SizedBox(height: 8),
-                                      Text('Status: ${package['status']}'),
-                                      Text('Gewicht: ${package['weight']} kg'),
+                                      Text('Status: ${package.status}'),
+                                      Text('Gewicht: ${package.weight} kg'),
                                       TextButton(
                                         onPressed: () {
                                           Navigator.pushNamed(
@@ -223,18 +224,18 @@ class _MapViewState extends State<MapView> {
     );
   }
 
-  Future<List<dynamic>> _getPackagesWithCoordinates() async {
-    List<dynamic> packages = await widget.packagesController.notStartedPackages();
+  Future<List<DeliveryPackageModel>> _getPackagesWithCoordinates() async {
+    List<DeliveryPackageModel> packages = await widget.packagesController.notStartedPackages();
     for (var package in packages) {
-      var startLocationJson = await widget.packagesController.apiController.GetData('api/addresses/${package['startLocationId']}');
+      var startLocationJson = await widget.packagesController.apiController.GetData('api/addresses/${package.startLocationId}');
       LatLng startCoordinates = await widget.geocoding.getLatLngFromAddress(jsonEncode(startLocationJson));
-      package['latitude'] = startCoordinates.latitude;
-      package['longitude'] = startCoordinates.longitude;
+      package.latitude = startCoordinates.latitude;
+      package.longitude = startCoordinates.longitude;
 
-      var endLocationJson = await widget.packagesController.apiController.GetData('api/addresses/${package['endLocationId']}');
+      var endLocationJson = await widget.packagesController.apiController.GetData('api/addresses/${package.endLocationId}');
       LatLng endCoordinates = await widget.geocoding.getLatLngFromAddress(jsonEncode(endLocationJson));
-      package['destinationLatitude'] = endCoordinates.latitude;
-      package['destinationLongitude'] = endCoordinates.longitude;
+      package.destinationLatitude = endCoordinates.latitude;
+      package.destinationLongitude = endCoordinates.longitude;
     }
     return packages;
   }

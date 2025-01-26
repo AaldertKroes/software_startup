@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:software_startup/controllers/apicontroller.dart';
+import 'package:software_startup/models/DeliveryPackageModel.dart';
 
 class PackagesController {
   final ApiController apiController;
@@ -10,7 +11,7 @@ class PackagesController {
 
   PackagesController({required this.baseUrl, required this.apiController});
 
-  Future<List<dynamic>> fetchPackages() async {
+  Future<List<DeliveryPackageModel>> fetchPackages() async {
     String? token = await storage.read(key: 'jwt');
     if (token == null) {
       throw Exception("JWT token niet gevonden. Log eerst in.");
@@ -27,49 +28,26 @@ class PackagesController {
     );
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      List<dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse.map((json) => DeliveryPackageModel.fromJson(json)).toList();
     } else {
       throw Exception("Kan pakketten niet ophalen: ${response.statusCode}");
     }
   }
 
-  Future<List<dynamic>> deliveredPackages() async {
-    List allPackages = await fetchPackages();
-    List delivered = [];
-
-    for (var i in allPackages) {
-      if (i['status'] == 'DELIVERED') {
-        delivered.add(i);
-      }
-    }
-
-    return delivered;
+  Future<List<DeliveryPackageModel>> deliveredPackages() async {
+    List<DeliveryPackageModel> allPackages = await fetchPackages();
+    return allPackages.where((package) => package.status == 'DELIVERED').toList();
   }
 
-  Future<List<dynamic>> notStartedPackages() async {
-    List allPackages = await fetchPackages();
-    List notStarted = [];
-
-    for (var i in allPackages) {
-      if (i['status'] == 'NOT_STARTED') {
-        notStarted.add(i);
-      }
-    }
-
-    return notStarted;
+  Future<List<DeliveryPackageModel>> notStartedPackages() async {
+    List<DeliveryPackageModel> allPackages = await fetchPackages();
+    return allPackages.where((package) => package.status == 'NOT_STARTED').toList();
   }
 
-  Future<List<dynamic>> underwayPackages() async {
-    List allPackages = await fetchPackages();
-    List underway = [];
-
-    for (var i in allPackages) {
-      if (i['status'] == 'UNDERWAY') {
-        underway.add(i);
-      }
-    }
-
-    return underway;
+  Future<List<DeliveryPackageModel>> underwayPackages() async {
+    List<DeliveryPackageModel> allPackages = await fetchPackages();
+    return allPackages.where((package) => package.status == 'UNDERWAY').toList();
   }
 
   Future<bool> createReturnPackage(Map<String, dynamic> package) async {
@@ -93,12 +71,16 @@ class PackagesController {
   }
 
   Future<bool> createReturnPackageV2(Map<String, dynamic> package) async {
-    // Change the delivery to be NOT_STARTED, flip destination and origin addresses. Put these changes to backend
     package['status'] = 'NOT_STARTED';
     var newStartLocation = package['endLocationId'];
     package['endLocationId'] = package['startLocationId'];
     package['startLocationId'] = newStartLocation;
 
     return await apiController.putData('api/delivery-packages/${package['id']}', package);
+  }
+
+  Future<bool> assignDriver(DeliveryPackageModel package, int id) async {
+    package.deliveryDriverId = id;
+    return await apiController.putData('api/delivery-packages/${package.id}', package.toJson());
   }
 }
