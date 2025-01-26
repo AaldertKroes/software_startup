@@ -4,7 +4,7 @@ import 'dart:convert';
 
 class SendPackageController {
   final storage = const FlutterSecureStorage();
-  final String baseUrl = 'http://192.168.2.9:8080/api';
+  final String baseUrl = 'http://10.0.2.2:8080/api';
   final Map<String, dynamic> _packageFormData = {
     "packageSize": "",
     "weight": 0,
