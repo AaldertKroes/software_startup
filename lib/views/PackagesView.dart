@@ -51,12 +51,12 @@ class _PackagesViewState extends State<PackagesView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Pakket ID: ${package['id']}',
+                        Text('Pakket ID: ${package.id}',
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16)),
                         const SizedBox(height: 8),
-                        Text('Status: ${package['status']}'),
-                        Text('Gewicht: ${package['weight']} kg'),
+                        Text('Status: ${package.status}'),
+                        Text('Gewicht: ${package.weight} kg'),
                         TextButton(
                           onPressed: () {
                             Navigator.pushNamed(

@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 
-// Write value
+
 class AuthController{
   final String baseUrl;
   final storage = const FlutterSecureStorage();

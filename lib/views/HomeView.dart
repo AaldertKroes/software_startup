@@ -37,7 +37,6 @@ class _HomeViewState extends State<HomeView> {
                     CustomStyles.willemRijdtButton(context, "Geschiedenis bekijken", redirectTo: "/packages"),
                     CustomStyles.willemRijdtButton(context, "Pakket aanmelden", redirectTo: "/packages-assign"),
                     CustomStyles.willemRijdtButton(context, "Pakketten bezorgen", redirectTo: "/mapview"),
-                    CustomStyles.willemRijdtButton(context, "Pakketten bezorgen", redirectTo: "/mapview"),
                   ],
                 ),
               ),
