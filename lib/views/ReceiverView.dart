@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:software_startup/common/CustomStyles.dart';
 import 'package:software_startup/controllers/packagescontroller.dart';
 
 class ReceiverPage extends StatefulWidget {
   final PackagesController controller;
 
-  const ReceiverPage({Key? key, required this.controller}) : super(key: key);
+  const ReceiverPage({super.key, required this.controller});
 
   @override
   _ReceiverPageState createState() => _ReceiverPageState();
 }
 
 class _ReceiverPageState extends State<ReceiverPage> {
-  late Future<List<dynamic>> underwayPackages;
+  late PackagesController controller;
 
   @override
   void initState() {
     super.initState();
-    underwayPackages = widget.controller.underwayPackages();
+    controller = widget.controller;
   }
 
   String calculateETA(int distance) {
@@ -38,7 +39,7 @@ class _ReceiverPageState extends State<ReceiverPage> {
         title: const Text('Pakketjes in Bezorging'),
       ),
       body: FutureBuilder<List<dynamic>>(
-        future: underwayPackages,
+        future: widget.controller.underwayPackages(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -48,25 +49,54 @@ class _ReceiverPageState extends State<ReceiverPage> {
             );
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('Geen pakketjes in bezorging.'));
+          } else {
+            var packages = snapshot.data!;
+            return ListView.builder(
+              itemCount: packages.length,
+              itemBuilder: (context, index) {
+                var package = packages[index];
+                var eta = calculateETA(package['distance']);
+                return CustomStyles.underWayPackageCard(context, package, eta, _showReturnPackageConfirmDialog) ;
+              },
+            );
           }
-
-          var packages = snapshot.data!;
-          return ListView.builder(
-            itemCount: packages.length,
-            itemBuilder: (context, index) {
-              var package = packages[index];
-              var eta = calculateETA(package['distance']);
-              return Card(
-                child: ListTile(
-                  title: Text('Pakket ID: ${package['id']}'),
-                  subtitle: Text('Afstand: ${package['distance']} km\nETA: $eta uur\nGewicht: ${package['weight']} kg'),
-                ),
-              );
-            },
-          );
         },
       ),
     );
+  }
+
+  void _showReturnPackageConfirmDialog(BuildContext context, package) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Verzeding terugsturen'),
+          content: const Text('Weet je zeker dat je de verzending wilt terugsturen?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Annuleren'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                controller.createReturnPackageV2(package);
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                'terugsturen',
+                style: TextStyle(
+                  color: Colors.red,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+    //Refresh page after alertDialog
+    setState(() {});
   }
 }
 

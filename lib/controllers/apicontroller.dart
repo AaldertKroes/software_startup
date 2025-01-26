@@ -41,4 +41,18 @@ class ApiController {
       return false;
     }
   }
+
+  Future<bool> putData(extension, data) async{
+    String? token = await storage.read(key: 'jwt');
+    var response = await http.put(
+      Uri.parse('$baseUrl/$extension'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+      body: json.encode(data),
+    );
+    return response.statusCode == 200 || response.statusCode == 204;
+  }
 }
