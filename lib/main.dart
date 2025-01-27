@@ -5,6 +5,7 @@ import 'package:software_startup/controllers/packagescontroller.dart';
 import 'package:software_startup/core/Constants.dart';
 import 'package:software_startup/views/ContactAndFAQView.dart';
 import 'package:software_startup/views/HomeView.dart';
+import 'package:software_startup/views/InsuranceView.dart';
 import 'package:software_startup/views/LoginView.dart';
 import 'package:software_startup/views/PackagesAssignView.dart';
 import 'package:software_startup/views/PackagesView.dart';
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
           final package = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
           return DamageView(controller: PackagesController(apiController: apiController), package: package);
         },
+        '/insurance' : (context) => const InsuranceView(),
       },
     );
   }
