@@ -75,15 +75,6 @@ class PackagesController {
     }
   }
 
-  Future<bool> createReturnPackageV2(Map<String, dynamic> package) async {
-    package['status'] = 'NOT_STARTED';
-    var newStartLocation = package['endLocationId'];
-    package['endLocationId'] = package['startLocationId'];
-    package['startLocationId'] = newStartLocation;
-
-    return await apiController.putData('api/delivery-packages/${package['id']}', package);
-  }
-
   Future<bool> assignDriver(DeliveryPackageModel package, int id) async {
     package.deliveryDriverId = id;
     return await apiController.putData('api/delivery-packages/${package.id}', package.toJson());

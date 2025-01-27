@@ -81,7 +81,7 @@ class _ReceiverPageState extends State<ReceiverPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                controller.createReturnPackageV2(package);
+                controller.createReturnPackage(package);
                 Navigator.of(context).pop();
               },
               child: const Text(

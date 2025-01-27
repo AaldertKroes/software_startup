@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:software_startup/common/CustomStyles.dart';
-import 'package:software_startup/models/DeliveryPackageModel.dart';
 import 'package:software_startup/controllers/InsuranceController.dart';
 
 /* Deze view moet 'aangeroepen' worden vanuit een knop op een pakket in
