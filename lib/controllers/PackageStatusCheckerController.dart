@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
-import 'package:software_startup/PackageStorage.dart';
+import 'package:software_startup/core/PackageStorage.dart';
 import 'package:software_startup/controllers/packagescontroller.dart';
 import 'package:software_startup/models/DeliveryPackageModel.dart';
 
