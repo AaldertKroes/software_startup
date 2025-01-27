@@ -84,7 +84,7 @@ class CustomStyles {
     );
   }
 
-  static Card insurancePackagesCard(BuildContext context, DeliveryPackageModel package) {
+  static Card insurancePackagesCard(BuildContext context, dynamic package) {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       elevation: 4,
@@ -93,11 +93,11 @@ class CustomStyles {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Pakket-ID: ${package.id}', style: CustomStyles.packageAssignCardTextStyle),
+            Text('Pakket-ID: ${package["id"]}', style: CustomStyles.packageAssignCardTextStyle),
             const SizedBox(height: 8),
             const Text('Beschrijving: Heel mooi pakketje'), // Er staat geen beschrijving in de database.
-            Text('Status: ${package.status}'),
-            Text('Gewicht: ${package.weight} kg'),
+            Text('Status: ${package["status"]}'),
+            Text('Gewicht: ${package["weight"]} kg'),
           ],
         ),
       ),

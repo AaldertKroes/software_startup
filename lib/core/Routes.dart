@@ -7,6 +7,7 @@ import 'package:software_startup/models/DeliveryPackageModel.dart';
 import 'package:software_startup/views/ContactAndFAQView.dart';
 import 'package:software_startup/views/DamageView.dart';
 import 'package:software_startup/views/HomeView.dart';
+import 'package:software_startup/views/InsuranceView.dart';
 import 'package:software_startup/views/LoginView.dart';
 import 'package:software_startup/views/MapView.dart';
 import 'package:software_startup/views/PackagesAssignView.dart';
@@ -38,5 +39,6 @@ Map<String, WidgetBuilder> appRoutes(DependencyContainer di) {
       final package = ModalRoute.of(context)!.settings.arguments as DeliveryPackageModel;
       return DamageView(controller: di.packagesController, package: package);
     },
+    '/insurance': (context) => InsuranceView(controller: di.insuranceController,),
   };
 }
