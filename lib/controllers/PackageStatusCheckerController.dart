@@ -42,8 +42,8 @@ class PackageStatusChecker {
     final message = Message()
       ..from = const Address('your_email@example.com', 'Your Name')
       ..recipients.add('recipient@example.com')
-      ..subject = 'Package Delivered: ${package['id']}'
-      ..text = 'Your package with ID ${package['id']} has been delivered.';
+      ..subject = 'Package Delivered: ${package.id}'
+      ..text = 'Your package with ID ${package.id} has been delivered.';
 
     try {
       final sendReport = await send(message, smtpServer);
