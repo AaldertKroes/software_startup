@@ -38,7 +38,6 @@ class CustomStyles {
             const SizedBox(height: 8),
             Text("Grootte: ${package.packageSize}"),
             Text("Gewicht: ${package.weight} kg"),
-            Text("Afstand: ${package.distance} km"),
             const SizedBox(height: 8),
             Text('Ophalen vanaf: ${package.startLocation}'),
             Text('Bezorgen naar: ${package.endLocation}'),
@@ -50,7 +49,7 @@ class CustomStyles {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Je bent nu de bezorger van dit pakket')),
                   );
-                  //Navigator.pushNamed(context, "/home");
+                  Navigator.pop(context);
                 }
               },
               style: CustomStyles.willemRijdtButtonStyle,

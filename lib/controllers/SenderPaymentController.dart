@@ -4,7 +4,7 @@ class SenderPaymentController {
   final ApiController apiController;
   SenderPaymentController({required this.apiController, });
 
-  String getPriceAsString(int price) {
+  String getPriceAsString(dynamic price) {
     var strPrice = price.toString();
     String lastTwo = strPrice.substring(strPrice.length - 2);
     String beforeLastTwo = strPrice.substring(0, strPrice.length - 2);

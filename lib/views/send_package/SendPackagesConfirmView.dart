@@ -35,7 +35,7 @@ class _SendPackagesConfirmState extends State<SendPackagesConfirm> {
       }
       Navigator.pushNamed(
         context,
-        '/sender-payment',
+        '/insurance',
         arguments: <String, dynamic> {
           "userPayment": response,
         }
