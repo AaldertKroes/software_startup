@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:software_startup/controllers/PackagesAssignController.dart';
 import 'package:software_startup/controllers/PackageStatusCheckerController.dart';
 import 'package:software_startup/controllers/packagescontroller.dart';
+import 'package:software_startup/core/Constants.dart';
 import 'package:software_startup/views/ContactAndFAQView.dart';
 import 'package:software_startup/views/HomeView.dart';
 import 'package:software_startup/views/LoginView.dart';
@@ -21,7 +22,7 @@ import 'controllers/AuthController.dart';
 
 
 void main() {
-  const String baseUrl = 'http://10.0.2.2:8080';
+  //const String baseUrl = 'http://10.0.2.2:8080';
   final apiController = ApiController(baseUrl: baseUrl);
 
   final packagesController = PackagesController(apiController: apiController);
