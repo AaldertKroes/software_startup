@@ -37,7 +37,7 @@ class PackageStatusChecker {
   }
 
   Future<void> sendStatusUpdateEmail(dynamic package) async {
-    final smtpServer = SmtpServer('10.0.2.2', port: 1025, allowInsecure: true);
+    final smtpServer = SmtpServer('10.0.2.2', port: 25, allowInsecure: true);
 
     final message = Message()
       ..from = const Address('your_email@example.com', 'Your Name')
