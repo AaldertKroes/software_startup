@@ -94,42 +94,53 @@ class _MapViewState extends State<MapView> {
           Expanded(
             child: FutureBuilder<List<DeliveryPackageModel>>(
               future: _getPackagesWithCoordinates(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<DeliveryPackageModel>> snapshot) {
+              builder: (BuildContext context, AsyncSnapshot<List<DeliveryPackageModel>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
-                  return Center(child: Text(
-                      'Fout bij ophalen van pakketten: ${snapshot.error}'));
+                  return Center(child: Text('Fout bij ophalen van pakketten: ${snapshot.error}'));
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Center(
-                      child: Text('Geen pakketten beschikbaar.'));
+                  return const Center(child: Text('Geen pakketten beschikbaar.'));
                 } else {
-                  List<Marker> markers = filteredPackages.map((package) {
-                    return Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(package.latitude!, package.longitude!),
-                      builder: (ctx) =>
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedPackage = package;
-                              });
-                            },
-                            child: Column(
-                              children: [
-                                const Icon(
-                                  Icons.location_on,
-                                  color: Colors.red,
-                                  size: 48,
-                                ),
-                                Text('ID: ${package.id}'),
-                              ],
-                            ),
+                  List<Marker> markers = [];
+                  for (var package in filteredPackages) {
+                    markers.add(
+                      Marker(
+                        width: 80.0,
+                        height: 80.0,
+                        point: LatLng(package.latitude!, package.longitude!),
+                        builder: (ctx) => GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedPackage = package;
+                            });
+                          },
+                          child: Column(
+                            children: [
+                              const Icon(
+                                Icons.location_on,
+                                color: Colors.red,
+                                size: 48,
+                              ),
+                              Text('ID: ${package.id}'),
+                            ],
                           ),
+                        ),
+                      ),
                     );
-                  }).toList();
+                    markers.add(
+                      Marker(
+                        width: 80.0,
+                        height: 80.0,
+                        point: LatLng(package.destinationLatitude!, package.destinationLongitude!),
+                        builder: (ctx) => const Icon(
+                          Icons.flag,
+                          color: Colors.green,
+                          size: 48,
+                        ),
+                      ),
+                    );
+                  }
 
                   List<Polyline> polylines = filteredPackages.map((package) {
                     return Polyline(
