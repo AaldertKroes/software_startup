@@ -4,7 +4,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.6.0 <4.0.0"
+  sdk: ^3.6.0
 
 dependencies:
   flutter:
@@ -19,6 +19,7 @@ dependencies:
   flutter_map: ^4.0.0
   latlong2: ^0.8.1
   mailer: ^6.4.1
+  geocoding: ^2.0.4
 
 dev_dependencies:
   flutter_test:

@@ -56,13 +56,36 @@ class PackagesController {
   }
 
   Future<bool> createReturnPackage(Map<String, dynamic> package) async {
-    // create new package with status 'NOT_STARTED', switch origin and destination and remove id
-
     package['status'] = 'NOT_STARTED';
     package['originAddress'] = package['destinationAddress'];
     package['destinationAddress'] = package['originAddress'];
     package.remove('id');
 
     return await apiController.postData('api/delivery-packages', package);
+  }
+
+  Future LocationAddress(int locationId) async {
+    var startLocation = await apiController.getData('/api/addresses/$locationId');
+    if (startLocation is List && startLocation.isNotEmpty) {
+      return startLocation[0];
+    } else if (startLocation is Map) {
+      return startLocation;
+    } else {
+      throw Exception('Invalid data format received from API');
+    }
+  }
+
+  Future<bool> createReturnPackageV2(Map<String, dynamic> package) async {
+    package['status'] = 'NOT_STARTED';
+    var newStartLocation = package['endLocationId'];
+    package['endLocationId'] = package['startLocationId'];
+    package['startLocationId'] = newStartLocation;
+
+    return await apiController.putData('api/delivery-packages/${package['id']}', package);
+  }
+
+  Future<bool> assignDriver(DeliveryPackageModel package, int id) async {
+    package.deliveryDriverId = id;
+    return await apiController.putData('api/delivery-packages/${package.id}', package.toJson());
   }
 }
