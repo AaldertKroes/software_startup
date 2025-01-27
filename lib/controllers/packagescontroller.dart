@@ -66,7 +66,7 @@ class PackagesController {
 
   Future LocationAddress(int locationId) async {
     var startLocation = await apiController.getData('/api/addresses/$locationId');
-    if (startLocation is List && startLocation.isNotEmpty) {
+    if (startLocation.isNotEmpty) {
       return startLocation[0];
     } else if (startLocation is Map) {
       return startLocation;

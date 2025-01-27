@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:software_startup/controllers/PackagesAssignController.dart';
+import 'package:software_startup/models/DeliveryPackageModel.dart';
 
 class CustomStyles {
   static const backgroundColor = Color(0xfffbfbfb);

@@ -8,7 +8,7 @@ class ApiController {
   ApiController({required this.baseUrl});
 
   // Method to retrieve data in a list
-  Future<List<dynamic>> getData(String extension) async {
+  Future getData(String extension) async {
     String? token = await storage.read(key: 'jwt');
     var response = await http.get(
       Uri.parse('$baseUrl/$extension'),
