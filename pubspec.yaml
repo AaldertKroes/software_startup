@@ -20,7 +20,6 @@ dependencies:
   latlong2: ^0.8.1
   mailer: ^6.4.1
   geocoding: ^2.0.4
-  geolocator: ^13.0.2
 
 dev_dependencies:
   flutter_test:
