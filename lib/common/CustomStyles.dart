@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:software_startup/controllers/PackagesAssignController.dart';
-import 'package:software_startup/models/DeliveryPackageModel.dart';
 
 class CustomStyles {
   static const backgroundColor = Color(0xfffbfbfb);
@@ -25,7 +24,7 @@ class CustomStyles {
     fontSize: 16,
   );
 
-  static Card packagesAssignCard(BuildContext context, PackagesAssignController controller, DeliveryPackageModel package) {
+  static Card packagesAssignCard(BuildContext context, PackagesAssignController controller, dynamic package) {
     return Card(
       elevation: 4,
       color: const Color(0xfffbfbfb),
@@ -48,7 +47,13 @@ class CustomStyles {
             ElevatedButton(
               onPressed: () async {
                 int assignDriverCheck = await controller.assignAsDriver(package);
-                if (context.mounted && assignDriverCheck == 1) Navigator.pushNamed(context, "/home");
+                if (context.mounted && assignDriverCheck == 1) {
+                  // create snackbar w message of success
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Je bent nu de bezorger van dit pakket')),
+                  );
+                  //Navigator.pushNamed(context, "/home");
+                }
               },
               style: CustomStyles.willemRijdtButtonStyle,
               child: const Text(
@@ -65,9 +70,9 @@ class CustomStyles {
   static Card underWayPackageCard(context, package, String eta, callback) {
     return Card(
       child: ListTile(
-        title: Text('Pakket ID: ${package['id']}'),
+        title: Text('Pakket ID: ${package.id}'),
         subtitle: Text(
-            'Afstand: ${package['distance']} km\nETA: $eta uur\nGewicht: ${package['weight']} kg'),
+            'Afstand: ${package.distance} km\nETA: $eta uur\nGewicht: ${package.weight} kg'),
         trailing: IconButton(
           icon: const Icon(Icons.delete),
           onPressed: () {

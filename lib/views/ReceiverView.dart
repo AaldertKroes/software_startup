@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:software_startup/common/CustomStyles.dart';
 import 'package:software_startup/controllers/packagescontroller.dart';
+import 'package:software_startup/models/DeliveryPackageModel.dart';
 
 class ReceiverPage extends StatefulWidget {
   final PackagesController controller;
@@ -38,7 +39,7 @@ class _ReceiverPageState extends State<ReceiverPage> {
       appBar: AppBar(
         title: const Text('Pakketjes in Bezorging'),
       ),
-      body: FutureBuilder<List<dynamic>>(
+      body: FutureBuilder<List<DeliveryPackageModel>>(
         future: widget.controller.underwayPackages(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -55,7 +56,7 @@ class _ReceiverPageState extends State<ReceiverPage> {
               itemCount: packages.length,
               itemBuilder: (context, index) {
                 var package = packages[index];
-                var eta = calculateETA(package['distance']);
+                var eta = calculateETA(package.distance.round());
                 return CustomStyles.underWayPackageCard(context, package, eta, _showReturnPackageConfirmDialog) ;
               },
             );
@@ -64,13 +65,12 @@ class _ReceiverPageState extends State<ReceiverPage> {
       ),
     );
   }
-
   void _showReturnPackageConfirmDialog(BuildContext context, package) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Verzeding terugsturen'),
+          title: const Text('Verzending terugsturen'),
           content: const Text('Weet je zeker dat je de verzending wilt terugsturen?'),
           actions: [
             TextButton(

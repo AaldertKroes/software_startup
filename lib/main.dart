@@ -13,10 +13,11 @@ import 'package:software_startup/views/send_package/SendPackagesBoxSizeView.dart
 import 'package:software_startup/views/send_package/SendPackagesAddressView.dart';
 import 'package:software_startup/views/send_package/SendPackagesRecipientView.dart';
 import 'package:software_startup/views/ReceiverView.dart';
-import 'package:software_startup/controllers/AuthController.dart';
+import 'package:software_startup/views/MapView.dart';
 import 'package:software_startup/controllers/apicontroller.dart';
 import 'package:software_startup/views/DamageView.dart';
 import 'package:software_startup/controllers/SenderPaymentController.dart';
+import 'controllers/AuthController.dart';
 
 
 void main() {
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
         '/sender-payment': (context) => SenderPaymentView(controller: SenderPaymentController(apiController: apiController)),
         '/contact' : (context) => ContactAndFAQView(),
         '/receiver' : (context) => ReceiverPage(controller: PackagesController(baseUrl: baseUrl, apiController: apiController)),
+        '/mapview' : (context) => MapView(packagesController: PackagesController(baseUrl: baseUrl, apiController: apiController)),
         '/damage' : (context) {
           final package = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
           return DamageView(controller: PackagesController(baseUrl: baseUrl, apiController: apiController), package: package);

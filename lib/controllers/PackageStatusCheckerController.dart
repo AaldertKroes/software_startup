@@ -3,7 +3,6 @@ import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:software_startup/PackageStorage.dart';
 import 'package:software_startup/controllers/packagescontroller.dart';
-import 'packagescontroller.dart';
 
 class PackageStatusChecker {
   final PackagesController packagesController;
