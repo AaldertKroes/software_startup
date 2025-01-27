@@ -38,7 +38,6 @@ class CustomStyles {
             const SizedBox(height: 8),
             Text("Grootte: ${package.packageSize}"),
             Text("Gewicht: ${package.weight} kg"),
-            Text("Afstand: ${package.distance} km"),
             const SizedBox(height: 8),
             Text('Ophalen vanaf: ${package.startLocation}'),
             Text('Bezorgen naar: ${package.endLocation}'),
