@@ -73,24 +73,6 @@ class _MapViewState extends State<MapView> {
 
   @override
   Widget build(BuildContext context) {
-    // Verkrijg de lijst van pakketten
-    List<DeliveryPackageModel> packages = packagesController.getPackages();
-
-    // Maak markers voor elk pakket
-    List<Marker> markers = packages.map((package) {
-      return Marker(
-        width: 80.0,
-        height: 80.0,
-        //point: LatLng(package.latitude, package.longitude),
-        point: LatLng(53.123, 6.123),
-        builder: (ctx) => Icon(
-          Icons.location_on,
-          color: Colors.red,
-          size: 48,
-        ),
-      );
-    }).toList();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pakketten op kaart'),

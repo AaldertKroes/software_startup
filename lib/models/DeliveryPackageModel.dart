@@ -64,6 +64,8 @@ class DeliveryPackageModel {
         'endLocationId': endLocationId,
         'senderId': senderId,
         'receiverId': receiverId,
-        'deliveryDriverId': deliveryDriverId
+        'deliveryDriverId': deliveryDriverId,
+        'destinationLatitude': destinationLatitude,
+        'destinationLongitude': destinationLongitude
       };
 }

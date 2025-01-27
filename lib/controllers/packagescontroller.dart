@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:software_startup/controllers/apicontroller.dart';
 import 'package:software_startup/models/DeliveryPackageModel.dart';
-import 'package:software_startup/models/DeliveryPackageModel.dart';
 
 class PackagesController {
   final ApiController apiController;
@@ -109,9 +108,5 @@ class PackagesController {
     } else {
       throw Exception("Kan pakket niet ophalen: ${response.statusCode}");
     }
-  }
-
-  Future<bool> createReturnPackage(Map<String, dynamic> package) async {
-    return await apiController.PostData('/api/delivery-packages', package);
   }
 }
