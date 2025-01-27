@@ -15,7 +15,7 @@ class DeliveryPackageModel {
   double? longitude;
   double? destinationLatitude;
   double? destinationLongitude;
-
+  double? shippingPrice;
 
   DeliveryPackageModel({
     this.id,
@@ -34,6 +34,7 @@ class DeliveryPackageModel {
     this.longitude,
     this.destinationLatitude,
     this.destinationLongitude,
+    this.shippingPrice,
   });
 
   factory DeliveryPackageModel.fromJson(Map<String, dynamic> json) => DeliveryPackageModel(

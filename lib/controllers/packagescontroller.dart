@@ -1,53 +1,58 @@
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:software_startup/controllers/apicontroller.dart';
+import 'package:software_startup/models/AddressModel.dart';
 import 'package:software_startup/models/DeliveryPackageModel.dart';
 
 class PackagesController {
   final ApiController apiController;
-  final String baseUrl;
   final storage = const FlutterSecureStorage();
 
-  PackagesController({required this.baseUrl, required this.apiController});
+  PackagesController({required this.apiController});
 
   Future<List<DeliveryPackageModel>> fetchPackages() async {
-    String? token = await storage.read(key: 'jwt');
-    if (token == null) {
-      throw Exception("JWT token niet gevonden. Log eerst in.");
+    var response = await apiController.getData("api/delivery-packages");
+    List<DeliveryPackageModel> packages = [];
+    for (Map<String, dynamic> jsonPackage in response) {
+      DeliveryPackageModel curPackage = DeliveryPackageModel.fromJson(jsonPackage);
+      packages.add(curPackage);
     }
+    return packages;
+  }
 
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
-    var response = await http.get(
-      Uri.parse('$baseUrl/api/delivery-packages'),
-      headers: headers,
-    );
-
-    if (response.statusCode == 200) {
-      List<dynamic> jsonResponse = jsonDecode(response.body);
-      return jsonResponse.map((json) => DeliveryPackageModel.fromJson(json)).toList();
-    } else {
-      throw Exception("Kan pakketten niet ophalen: ${response.statusCode}");
-    }
+  Future<String> getLocationString(int id) async {
+    var response = await apiController.getRecord('api/addresses/$id');
+    AddressModel curAddress = AddressModel.fromJson(response);
+    return "${curAddress.street} ${curAddress.postalCode}, ${curAddress.city}, ${curAddress.country}";
   }
 
   Future<List<DeliveryPackageModel>> deliveredPackages() async {
     List<DeliveryPackageModel> allPackages = await fetchPackages();
-    return allPackages.where((package) => package.status == 'DELIVERED').toList();
+    List<DeliveryPackageModel> delivered = [];
+
+    for (var currentPackage in allPackages) {
+      if (currentPackage.status == 'DELIVERED') delivered.add(currentPackage);
+    }
+    return delivered;
   }
 
   Future<List<DeliveryPackageModel>> notStartedPackages() async {
     List<DeliveryPackageModel> allPackages = await fetchPackages();
-    return allPackages.where((package) => package.status == 'NOT_STARTED').toList();
+    List<DeliveryPackageModel> notStarted = [];
+
+    for (var currentPackage in allPackages) {
+      if (currentPackage.status == 'NOT_STARTED') notStarted.add(currentPackage);
+    }
+    return notStarted;
   }
 
   Future<List<DeliveryPackageModel>> underwayPackages() async {
     List<DeliveryPackageModel> allPackages = await fetchPackages();
-    return allPackages.where((package) => package.status == 'UNDERWAY').toList();
+    List<DeliveryPackageModel> underway = [];
+
+    for (var currentPackage in allPackages) {
+      if (currentPackage.status == 'UNDERWAY') underway.add(currentPackage);
+    }
+    return underway;
   }
 
   Future<bool> createReturnPackage(Map<String, dynamic> package) async {
@@ -56,12 +61,12 @@ class PackagesController {
     package['destinationAddress'] = package['originAddress'];
     package.remove('id');
 
-    return await apiController.PostData('api/delivery-packages', package);
+    return await apiController.postData('api/delivery-packages', package);
   }
 
   Future LocationAddress(int locationId) async {
-    var startLocation = await apiController.GetData('/api/addresses/$locationId');
-    if (startLocation is List && startLocation.isNotEmpty) {
+    var startLocation = await apiController.getData('/api/addresses/$locationId');
+    if (startLocation.isNotEmpty) {
       return startLocation[0];
     } else if (startLocation is Map) {
       return startLocation;

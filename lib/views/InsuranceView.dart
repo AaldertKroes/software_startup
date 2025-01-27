@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:software_startup/classes/Package.dart';
-import 'package:software_startup/widgets/PackageCard.dart';
+import 'package:software_startup/common/CustomStyles.dart';
+import 'package:software_startup/models/DeliveryPackageModel.dart';
 
 /* Deze view moet 'aangeroepen' worden vanuit een knop op een pakket in
 PackagesView. Dan kan het benodigde Package-object meegegeven worden. */
 class InsuranceView extends StatefulWidget {
   const InsuranceView({super.key, required this.package});
-  final Package package;
+  final DeliveryPackageModel package;
 
   @override
   State<InsuranceView> createState() => _InsuranceViewState();
@@ -24,9 +24,9 @@ class _InsuranceViewState extends State<InsuranceView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            PackageCard(package: widget.package),
+            CustomStyles.insurancePackagesCard(context, widget.package),
             Text(
-                "Het verzekeren van dit pakket kost: ${widget.package.shippingPrice / 4}"),
+                "Het verzekeren van dit pakket kost: ${widget.package.shippingPrice! / 4}"),
             TextButton(
                 onPressed: () => {},
                 child: const Text("Verzekeren")) // TODO: onPressed

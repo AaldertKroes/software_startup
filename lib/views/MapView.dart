@@ -6,15 +6,15 @@ import 'package:latlong2/latlong.dart';
 import 'package:software_startup/controllers/packagescontroller.dart';
 import 'package:software_startup/controllers/PackagesAssignController.dart';
 import 'package:software_startup/models/DeliveryPackageModel.dart';
-import '../services/geocoding.dart';
-import '../common/CustomStyles.dart';
+import 'package:software_startup/services/geocoding.dart';
+import 'package:software_startup/common/CustomStyles.dart';
 
 
 class MapView extends StatefulWidget {
   final PackagesController packagesController;
   final Geocoding geocoding = Geocoding();
 
-  MapView({Key? key, required this.packagesController}) : super(key: key);
+  MapView({super.key, required this.packagesController});
 
   @override
   _MapViewState createState() => _MapViewState();
@@ -83,7 +83,7 @@ class _MapViewState extends State<MapView> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: searchController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Zoek op afstand (km)',
                 border: OutlineInputBorder(),
               ),
@@ -119,7 +119,7 @@ class _MapViewState extends State<MapView> {
                             },
                             child: Column(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.location_on,
                                   color: Colors.red,
                                   size: 48,
@@ -146,7 +146,7 @@ class _MapViewState extends State<MapView> {
                   return SingleChildScrollView(
                     child: Column(
                       children: [
-                        Container(
+                        SizedBox(
                           height: 300,
                           child: FlutterMap(
                             options: MapOptions(
@@ -158,7 +158,7 @@ class _MapViewState extends State<MapView> {
                             children: [
                               TileLayer(
                                 urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                                subdomains: ['a', 'b', 'c'],
+                                subdomains: const ['a', 'b', 'c'],
                               ),
                               PolylineLayer(polylines: polylines),
                               MarkerLayer(markers: markers),
@@ -168,19 +168,18 @@ class _MapViewState extends State<MapView> {
                         if (selectedPackage != null)
                           CustomStyles.packagesAssignCard(context,
                               PackagesAssignController(
-                                  baseUrl: widget.packagesController.baseUrl),
+                                 apiController: widget.packagesController.apiController),
                               selectedPackage!)
                         else
                           ListView.builder(
                             shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             itemCount: filteredPackages.length,
                             itemBuilder: (BuildContext context, int index) {
                               var package = filteredPackages[index];
                               return CustomStyles.packagesAssignCard(context,
                                   PackagesAssignController(
-                                      baseUrl: widget.packagesController
-                                          .baseUrl), package);
+                                      apiController: widget.packagesController.apiController), package);
                             },
                           ),
                       ],
@@ -200,22 +199,22 @@ class _MapViewState extends State<MapView> {
         .notStartedPackages();
     for (var package in packages) {
         var startLocationJson = await widget.packagesController.apiController
-            .GetData('api/addresses/${package.startLocationId}');
-        package.startLocation = (startLocationJson['street'] ?? '') + ' ' +
-            (startLocationJson['houseNumber'] ?? '') + ', ' +
-            (startLocationJson['postalCode'] ?? '') + ' ' +
-            (startLocationJson['city'] ?? '');
+            .getData('api/addresses/${package.startLocationId}');
+        package.startLocation = '''
+          ${startLocationJson['street'] ?? ''} ${startLocationJson['houseNumber'] ?? ''}, 
+          ${startLocationJson['postalCode'] ?? ''} ${startLocationJson['city'] ?? ''}
+        ''';
         LatLng startCoordinates = await widget.geocoding.getLatLngFromAddress(
             jsonEncode(startLocationJson));
         package.latitude = startCoordinates.latitude;
         package.longitude = startCoordinates.longitude;
 
         var endLocationJson = await widget.packagesController.apiController
-            .GetData('api/addresses/${package.endLocationId}');
-        package.endLocation = (endLocationJson['street'] ?? '') + ' ' +
-            (endLocationJson['houseNumber'] ?? '') + ', ' +
-            (endLocationJson['postalCode'] ?? '') + ' ' +
-            (endLocationJson['city'] ?? '');
+            .getData('api/addresses/${package.endLocationId}');
+        package.endLocation = '''
+          ${endLocationJson['street'] ?? ''} ${endLocationJson['houseNumber'] ?? ''}, 
+          ${endLocationJson['postalCode'] ?? ''} ${endLocationJson['city'] ?? ''}
+        ''';
         LatLng endCoordinates = await widget.geocoding.getLatLngFromAddress(
             jsonEncode(endLocationJson));
         package.destinationLatitude = endCoordinates.latitude;

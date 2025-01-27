@@ -48,13 +48,13 @@ class SendPackageController {
   }
 
   void addPackageAddresses(
-      String recipientStreet,
-      String recipientCity,
-      String recipientPostal,
-      String senderStreet,
-      String senderCity,
-      String senderPostal,
-      ) {
+    String recipientStreet,
+    String recipientCity,
+    String recipientPostal,
+    String senderStreet,
+    String senderCity,
+    String senderPostal,
+    ) {
     _recipientAddressFormData["street"] = recipientStreet;
     _recipientAddressFormData["city"] = recipientCity;
     _recipientAddressFormData["postalCode"] = recipientPostal;
@@ -67,16 +67,16 @@ class SendPackageController {
 
   Future<dynamic> submitNewDelivery(Map<String, dynamic> packageData) async {
     addPackageSizeAndWeight(
-        packageData['packageSize'],
-        packageData['packageWeight'],
+      packageData['packageSize'],
+      packageData['packageWeight'],
     );
     addPackageAddresses(
-        packageData["recipientStreet"],
-        packageData["recipientCity"],
-        packageData["recipientPostalCode"],
-        packageData["senderStreet"],
-        packageData["senderCity"],
-        packageData["senderPostalCode"],
+      packageData["recipientStreet"],
+      packageData["recipientCity"],
+      packageData["recipientPostalCode"],
+      packageData["senderStreet"],
+      packageData["senderCity"],
+      packageData["senderPostalCode"],
     );
     
     dynamic recipientAddressId = await postRequest(_recipientAddressFormData, 'addresses');
