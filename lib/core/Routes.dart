@@ -3,6 +3,7 @@ import 'package:software_startup/controllers/AuthController.dart';
 import 'package:software_startup/controllers/PackagesAssignController.dart';
 import 'package:software_startup/controllers/SenderPaymentController.dart';
 import 'package:software_startup/core/DependencyContainer.dart';
+import 'package:software_startup/models/DeliveryPackageModel.dart';
 import 'package:software_startup/views/ContactAndFAQView.dart';
 import 'package:software_startup/views/DamageView.dart';
 import 'package:software_startup/views/HomeView.dart';
@@ -34,7 +35,7 @@ Map<String, WidgetBuilder> appRoutes(DependencyContainer di) {
     '/receiver': (context) => ReceiverPage(controller: di.packagesController),
     '/mapview': (context) => MapView(packagesController: di.packagesController),
     '/damage': (context) {
-      final package = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+      final package = ModalRoute.of(context)!.settings.arguments as DeliveryPackageModel;
       return DamageView(controller: di.packagesController, package: package);
     },
   };

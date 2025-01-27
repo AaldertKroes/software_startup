@@ -6,13 +6,14 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:software_startup/controllers/apicontroller.dart';
-
+import 'package:software_startup/core/DependencyContainer.dart';
 import 'package:software_startup/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    final di = DependencyContainer();
+    di.init();
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(baseUrl: 'http://10.0.2.2:8080', apiController: ApiController(baseUrl: 'http://10.0.2.2:8080'),));
+    await tester.pumpWidget(MyApp(di: di,));
   });
 }

@@ -6,13 +6,13 @@ import 'package:software_startup/models/DeliveryPackageModel.dart';
 class PackagesView extends StatefulWidget {
   final PackagesController controller;
 
-  const PackagesView({Key? key, required this.controller}) : super(key: key);
+  const PackagesView({super.key, required this.controller});
 
   @override
-  _PackagesViewState createState() => _PackagesViewState();
+  PackagesViewState createState() => PackagesViewState();
 }
 
-class _PackagesViewState extends State<PackagesView> {
+class PackagesViewState extends State<PackagesView> {
   @override
   void initState() => super.initState();
 

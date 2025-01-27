@@ -55,13 +55,13 @@ class PackagesController {
     return underway;
   }
 
-  Future<bool> createReturnPackage(Map<String, dynamic> package) async {
-    package['status'] = 'NOT_STARTED';
-    package['originAddress'] = package['destinationAddress'];
-    package['destinationAddress'] = package['originAddress'];
-    package.remove('id');
+  Future<bool> createReturnPackage(DeliveryPackageModel package) async {
+    package.status = 'NOT_STARTED';
+    var newStartLocation = package.endLocationId;
+    package.endLocationId = package.startLocationId;
+    package.startLocationId = newStartLocation;
 
-    return await apiController.postData('api/delivery-packages', package);
+    return await apiController.putData('api/delivery-packages/${package.id}', package);
   }
 
   Future LocationAddress(int locationId) async {

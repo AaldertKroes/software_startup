@@ -77,7 +77,7 @@ class CustomStyles {
             const SizedBox(height: 8),
             Text('Status: ${package.status}'),
             Text('Gewicht: ${package.weight} kg'),
-            CustomStyles.willemRijdtButton(context, "Schade melden", redirectTo: '/damage'),
+            CustomStyles.willemRijdtButton(context, "Schade melden", redirectTo: '/damage', argument: package),
           ],
         ),
       ),
