@@ -44,6 +44,12 @@ class LoginView extends StatelessWidget {
                 },
                 child: const Text("Login"),
             ),
+              ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/register');
+              },
+              child: const Text("Register"),
+            ),
           ],
         ),
       ),
