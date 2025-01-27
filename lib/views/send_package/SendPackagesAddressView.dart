@@ -106,7 +106,7 @@ class _SendPackagesAddressState extends State<SendPackagesAddress> {
           validator: (value) {
             if (value == null || value.isEmpty) {
               return "Voer een straat en huisnummer in";
-            } else if (!RegExp(r'^[A-Za-z\s]+ \d+$').hasMatch(value)) {
+            } else if (!RegExp(r'^[A-Za-z\s]+ \d+[A-Za-z]?$').hasMatch(value)) {
               return "Voer een geldige straat en huisnummer in";
             }
             return null;
