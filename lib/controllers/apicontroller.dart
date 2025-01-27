@@ -7,7 +7,7 @@ class ApiController {
   final storage = const FlutterSecureStorage();
   ApiController({required this.baseUrl});
 
-  Future<List<dynamic>> GetData(extension) async{
+  Future GetData(extension) async{
     String? token = await storage.read(key: 'jwt');
     var response = await http.get(
       Uri.parse('$baseUrl/$extension'),
@@ -40,5 +40,19 @@ class ApiController {
     }else{
       return false;
     }
+  }
+
+  Future<bool> putData(extension, data) async{
+    String? token = await storage.read(key: 'jwt');
+    var response = await http.put(
+      Uri.parse('$baseUrl/$extension'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+      body: json.encode(data),
+    );
+    return response.statusCode == 200 || response.statusCode == 204;
   }
 }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:software_startup/controllers/PackagesAssignController.dart';
-import 'package:software_startup/models/DeliveryPackageModel.dart';
 
 class CustomStyles {
+  static const backgroundColor = Color(0xfffbfbfb);
+
   static ButtonStyle willemRijdtButtonStyle = ButtonStyle(
       backgroundColor: const WidgetStatePropertyAll<Color>(Colors.black87),
       fixedSize: const WidgetStatePropertyAll<Size>(Size(300, 50)),
@@ -29,7 +30,7 @@ class CustomStyles {
   );
 
   static Card packagesAssignCard(BuildContext context,
-      PackagesAssignController controller, DeliveryPackageModel package) {
+      PackagesAssignController controller, dynamic package) {
     return Card(
       elevation: 4,
       color: const Color(0xfffbfbfb),
@@ -53,8 +54,15 @@ class CustomStyles {
                 onPressed: () async {
                   int assignDriverCheck =
                       await controller.assignAsDriver(package);
-                  if (context.mounted && assignDriverCheck == 1)
-                    Navigator.pushNamed(context, "/home");
+                  if (context.mounted && assignDriverCheck == 1) {
+                    // create snackbar w message of success
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content:
+                              Text('Je bent nu de bezorger van dit pakket')),
+                    );
+                    //Navigator.pushNamed(context, "/home");
+                  }
                 },
                 style: CustomStyles.willemRijdtButtonStyle,
                 child: const Text(
@@ -92,4 +100,36 @@ class CustomStyles {
               ],
             ),
           ));
+
+  static Card underWayPackageCard(context, package, String eta, callback) {
+    return Card(
+      child: ListTile(
+        title: Text('Pakket ID: ${package.id}'),
+        subtitle: Text(
+            'Afstand: ${package.distance} km\nETA: $eta uur\nGewicht: ${package.weight} kg'),
+        trailing: IconButton(
+          icon: const Icon(Icons.delete),
+          onPressed: () {
+            callback(context, package);
+          },
+        ),
+      ),
+    );
+  }
+
+  static Container infoTile(String label, dynamic value) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text("$value"),
+        ],
+      ),
+    );
+  }
 }

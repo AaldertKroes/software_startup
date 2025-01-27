@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:software_startup/common/CustomStyles.dart';
 import 'package:software_startup/controllers/packagescontroller.dart';
 import 'package:software_startup/models/DeliveryPackageModel.dart';
 import 'package:software_startup/views/InsuranceView.dart';
+import 'package:software_startup/common/CustomStyles.dart';
 
 class PackagesView extends StatefulWidget {
   final PackagesController controller;
@@ -45,17 +45,22 @@ class _PackagesViewState extends State<PackagesView> {
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (BuildContext context, int index) {
-                var package =
-                    DeliveryPackageModel.fromJson(snapshot.data![index]);
+                var package = snapshot.data![index];
                 return CustomStyles.willemRijdtPackageCard(
-                    package.id, package.status, package.weight,
-                    button: TextButton(
-                        onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    InsuranceView(id: package.id))),
-                        child: const Text('Verzekeren')));
+                  package.id,
+                  package.status,
+                  package.weight,
+                  button: TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/damage',
+                        arguments: package,
+                      );
+                    },
+                    child: const Text('Schade melden'),
+                  ),
+                );
               },
             );
           }
