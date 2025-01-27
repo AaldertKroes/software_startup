@@ -109,4 +109,25 @@ class PackagesController {
       throw Exception("Kan pakket niet ophalen: ${response.statusCode}");
     }
   }
+
+  Future<double> getShippingPriceByPackageId(int id) async {
+    String? token = await storage.read(key: 'jwt');
+    if (token == null) {
+      throw Exception('JWT token niet gevonden. Log eerst in.');
+    }
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var response = await http.get(
+      Uri.parse('$baseUrl/api/user-payments/'),
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      List<dynamic> decodedJson = jsonDecode(response.body);
+      return decodedJson.firstWhere((obj) => obj['packageId'] == id)['amount'];
+    } else {
+      throw Exception("Kan pakket niet ophalen: ${response.statusCode}");
+    }
+  }
 }

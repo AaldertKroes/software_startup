@@ -22,6 +22,8 @@ class _InsuranceViewState extends State<InsuranceView> {
   Widget build(BuildContext context) {
     Future<DeliveryPackageModel>? package =
         controller.getPackageById(widget.id!);
+    Future<double>? shippingPriceFuture =
+        controller.getShippingPriceByPackageId(widget.id!);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -29,16 +31,19 @@ class _InsuranceViewState extends State<InsuranceView> {
         ),
         body: Center(
           child: FutureBuilder(
-              future: package,
+              future: Future.wait([package, shippingPriceFuture]),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
+                  DeliveryPackageModel packageModel =
+                      snapshot.data!.first as DeliveryPackageModel;
+                  double shippingPrice = snapshot.data!.last as double;
                   return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CustomStyles.willemRijdtPackageCard(snapshot.data!.id,
-                            snapshot.data!.status, snapshot.data!.weight,
+                        CustomStyles.willemRijdtPackageCard(packageModel.id,
+                            packageModel.status, packageModel.weight,
                             insuranceInfoText: Text(
-                                'Het verzekeren van dit pakket kost: €${snapshot.data!.shippingPrice! / 4}'),
+                                'Het verzekeren van dit pakket kost: €${shippingPrice / 4}'),
                             //packageDesc: snapshot.data!.description,
                             button: TextButton(
                                 onPressed: () => {},
