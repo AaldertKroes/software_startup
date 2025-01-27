@@ -50,7 +50,7 @@ class CustomStyles {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Je bent nu de bezorger van dit pakket')),
                   );
-                  //Navigator.pushNamed(context, "/home");
+                  Navigator.pop(context);
                 }
               },
               style: CustomStyles.willemRijdtButtonStyle,

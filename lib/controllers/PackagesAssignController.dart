@@ -35,6 +35,6 @@ class PackagesAssignController {
 
   Future<bool> assignAsDriver(DeliveryPackageModel package) async {
     package.deliveryDriverId = 1; // admin user
-    return await apiController.postData('api/delivery-packages/${package.id}', package.toJson());
+    return await apiController.putData('api/delivery-packages/${package.id}', package.toJson());
   }
 }
