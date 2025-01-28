@@ -23,13 +23,22 @@ class InsuranceView extends StatelessWidget {
 
   void _addInsuranceAndNavigate(BuildContext context, userPayment) {
     userPayment["amount"] = userPayment["amount"]+(userPayment["amount"]~/4);
-
     ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text(
             "Verzekering toegevoegd"
         ),
         )
     );
+    Navigator.pushNamed(
+        context,
+        '/sender-payment',
+        arguments: <String, dynamic> {
+          "userPayment": userPayment,
+        }
+    );
+  }
+
+  void _navigateToPaymentNoInsurance(BuildContext context, userPayment) {
     Navigator.pushNamed(
         context,
         '/sender-payment',
@@ -71,9 +80,17 @@ class InsuranceView extends StatelessWidget {
                 "Het verzekeren van dit pakket kost: € ${getPriceAsString(args["userPayment"]['amount']! ~/ 4)}"),
             TextButton(
                 onPressed: () => {
+
                   _addInsuranceAndNavigate(context, args["userPayment"])
                 },
-                child: const Text("Verzekeren"))
+                child: const Text("Verzekeren")
+            ),
+            TextButton(
+                onPressed: () => {
+                  _navigateToPaymentNoInsurance(context, args["userPayment"])
+                },
+                child: const Text("Niet verzekeren")
+            ),
           ],
         ),
       ),
